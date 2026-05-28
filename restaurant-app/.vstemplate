@@ -1,0 +1,15 @@
+<VSTemplate Version="3.0.0" Type="Project">
+  <TemplateData>
+    <Name>Full API Template</Name>
+    <Description>API base com EF Core e arquitetura limpa, Auth, Jwt, Swagger, Logging</Description>
+    <ProjectType>CSharp</ProjectType>
+    <CreateNewFolder>true</CreateNewFolder>
+    <DefaultName>FullApi</DefaultName>
+  </TemplateData>
+
+  <TemplateContent>
+    <Project File="TemplateApiBase.csproj" ReplaceParameters="true">
+      <ProjectItem ReplaceParameters="true">Program.cs</ProjectItem>
+    </Project>
+  </TemplateContent>
+</VSTemplate>

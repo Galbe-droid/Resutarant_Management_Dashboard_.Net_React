@@ -1,0 +1,109 @@
+2026-05-24 19:16:44.394 -03:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-24 19:16:44.485 -03:00 [INF] Executed DbCommand (25ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-05-24 19:16:44.489 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-24 19:16:44.492 -03:00 [INF] Executed DbCommand (0ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-05-24 19:16:44.520 -03:00 [INF] Executed DbCommand (14ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-05-24 19:16:44.545 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-05-24 19:16:44.809 -03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Roles] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-24 19:16:44.837 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[IsDeleted] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-24 19:16:44.854 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]
+        WHERE [c].[Name] = N'Other') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-24 19:16:45.063 -03:00 [INF] Executed DbCommand (76ms) [Parameters=[@p0='?' (DbType = Guid), @p1='?' (Size = 100)], CommandType='"Text"', CommandTimeout='30']
+SET IMPLICIT_TRANSACTIONS OFF;
+SET NOCOUNT ON;
+INSERT INTO [Categories] ([Id], [Name])
+VALUES (@p0, @p1);
+2026-05-24 19:16:45.078 -03:00 [INF] restaurant_app starting...
+2026-05-24 19:16:45.217 -03:00 [INF] restaurant_app started successfully.
+2026-05-24 19:16:45.250 -03:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-24 19:16:45.669 -03:00 [INF] Now listening on: https://localhost:7135
+2026-05-24 19:16:45.670 -03:00 [INF] Now listening on: http://localhost:5092
+2026-05-24 19:16:45.767 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-24 19:16:45.768 -03:00 [INF] Hosting environment: Development
+2026-05-24 19:16:45.769 -03:00 [INF] Content root path: F:\Projetos csharp\Restaurante\restaurant-app
+2026-05-24 19:16:46.328 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/index.html - null null
+2026-05-24 19:16:46.525 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/index.html - 200 null text/html;charset=utf-8 204.9072ms
+2026-05-24 19:16:46.549 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-24 19:16:46.557 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 8.0574ms
+2026-05-24 19:16:46.585 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_vs/browserLink - null null
+2026-05-24 19:16:46.703 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_vs/browserLink - 200 null text/javascript; charset=UTF-8 117.6297ms
+2026-05-24 19:16:46.845 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - null null
+2026-05-24 19:16:46.865 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 19.9411ms
+2026-05-24 19:17:25.026 -03:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-24 19:17:25.105 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-05-24 19:17:25.110 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-05-24 19:17:25.113 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-05-24 19:17:25.168 -03:00 [INF] Executed DbCommand (42ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-05-24 19:17:25.186 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-05-24 19:17:25.356 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Roles] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-24 19:17:25.389 -03:00 [INF] Executed DbCommand (11ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[IsDeleted] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-24 19:17:25.421 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]
+        WHERE [c].[Name] = N'Other') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-05-24 19:17:25.429 -03:00 [INF] restaurant_app starting...
+2026-05-24 19:17:25.529 -03:00 [INF] restaurant_app started successfully.
+2026-05-24 19:17:25.549 -03:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-05-24 19:17:25.730 -03:00 [INF] Now listening on: https://localhost:7135
+2026-05-24 19:17:25.731 -03:00 [INF] Now listening on: http://localhost:5092
+2026-05-24 19:17:25.814 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-05-24 19:17:25.816 -03:00 [INF] Hosting environment: Development
+2026-05-24 19:17:25.817 -03:00 [INF] Content root path: F:\Projetos csharp\Restaurante\restaurant-app
+2026-05-24 19:17:26.039 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/index.html - null null
+2026-05-24 19:17:26.198 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/index.html - 200 null text/html;charset=utf-8 167ms
+2026-05-24 19:17:26.225 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - null null
+2026-05-24 19:17:26.232 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 6.2602ms
+2026-05-24 19:17:26.259 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_vs/browserLink - null null
+2026-05-24 19:17:26.294 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_vs/browserLink - 200 null text/javascript; charset=UTF-8 34.5016ms
+2026-05-24 19:17:26.439 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - null null
+2026-05-24 19:17:26.471 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 32.4935ms

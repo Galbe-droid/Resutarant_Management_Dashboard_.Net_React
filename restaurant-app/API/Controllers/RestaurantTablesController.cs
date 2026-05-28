@@ -30,7 +30,6 @@ namespace Template_restaurant_app.API.Controllers
         [Route("")]
         public async Task<IActionResult> GetAll()
         {
-            _logger.LogInformation("Attempt of seeing all tables for user {User}", User.FindFirstValue(ClaimTypes.Name));
             return Ok(await _restaurantTableService.GetAllAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
         }
 
@@ -38,7 +37,6 @@ namespace Template_restaurant_app.API.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            _logger.LogInformation("Attempt a tables for user {User}", User.FindFirstValue(ClaimTypes.Name));
             return Ok(await _restaurantTableService.GetByIdAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
         }
 

@@ -1,5 +1,7 @@
 ﻿using Serilog;
+using Serilog.Context;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace Template_restaurant_app.API.Middleware
 {
@@ -44,6 +46,20 @@ namespace Template_restaurant_app.API.Middleware
                 context.Response.StatusCode,
                 stopwatch.Elapsed.TotalMilliseconds
             );
+
+            var username = context.User?.Identity?.IsAuthenticated == true ? context.User.Identity.Name : "Anonymous";
+
+            using (LogContext.PushProperty("Username", username))
+            {
+                await _next(context);
+            }
+
+            var userId = context.User?.FindFirst(ClaimTypes.NameIdentifier) ?.Value ?? "Unknown";
+
+            using (LogContext.PushProperty("UserId", userId))
+            {
+                await _next(context);
+            }
         }
     }
 }

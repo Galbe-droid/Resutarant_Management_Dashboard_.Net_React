@@ -43,7 +43,7 @@ namespace Template_restaurant_app.API.Mappers
             {
                 Id = order.Id,
                 TableId = order.TableId,
-                Table = TableMapping.ToReturnTableDto(order.Table),
+                Table = RestaurantTableMapping.ToReturnTableDto(order.Table),
                 OrderDate = order.OrderDate,
                 TotalAmount = order.TotalAmount,
                 Status = order.Status,

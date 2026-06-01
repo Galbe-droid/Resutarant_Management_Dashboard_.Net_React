@@ -5,7 +5,7 @@ namespace Template_restaurant_app.API.Mappers
 {
     public static class OrderItemMapping
     {
-        public static OrderItem ToOrderItem(CreateOrderItemDto create, Order order, Product product)
+        public static OrderItem ToOrderItem(ReceiveOrderItemDto create, Order order, Product product)
         {
             return new OrderItem
             {
@@ -17,19 +17,6 @@ namespace Template_restaurant_app.API.Mappers
                 Quantity = create.Quantity
             };
         }
-
-        public static OrderItem ToUpdateOrderItem(OrderItem orderItem, UpdateOrderItemDto update, Order? order = null, Product? product = null)
-        {
-            orderItem.OrderId = order == null ? orderItem.OrderId : order.Id;
-            orderItem.Order = order == null ? orderItem.Order : order;
-            orderItem.ProductId = product == null ? orderItem.ProductId : product.Id;
-            orderItem.Product = product == null ? orderItem.Product : product;
-            orderItem.ProductName = product == null ? orderItem.ProductName : product.Name;
-            orderItem.Quantity = update.Quantity;
-
-            return orderItem;
-        }
-
         public static ReturnOrderItemDto ToReturnOrderItem(OrderItem orderItem)
         {
             return new ReturnOrderItemDto

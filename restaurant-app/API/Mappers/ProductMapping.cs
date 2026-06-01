@@ -63,5 +63,10 @@ namespace Template_restaurant_app.API.Mappers
         {
             return (from Product product in products select ToReturnToListProductDto(product)).ToList();
         }
+
+        public static List<ReturnProductDto> ToReturnProductDtos(List<Product> products)
+        {
+            return (from Product product in products select ToReturnProduct(product)).ToList();
+        }
     }
 }

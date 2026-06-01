@@ -5,6 +5,7 @@
         Open,
         Attention,
         Finished,
-        Paid
+        Paid,
+        Cancelled
     }
 }

@@ -16,27 +16,14 @@ namespace Template_restaurant_app.API.Mappers
             };
         }
 
-        public static Order ToUpdateOrder(Order order, UpdateOrderDto update)
+        public static Order ToUpdateOrder(Order order, RestaurantTable? update = null)
         {
-            order.TableId = update.RestaurantTable?.Id == null ? order.TableId : update.RestaurantTable.Id;
-            order.Table = update.RestaurantTable == null ? order.Table : update.RestaurantTable;
-
-            if(update.OrderItems != null)
+            if(update != null)
             {
-                foreach (var item in update.OrderItems)
-                {
-                    order.OrderItems.Add(OrderItemMapping.ToOrderItem(item, order, new Product { Id = item.ProductId }));
-                }
+                order.Table.Number = update.Number;
             }
-
-            if(update.Status != null)
-            {
-                order.Status = update.Status.Value;
-            }
-
             return order;
         }
-
         public static ReturnOrderDto ToReturnOrder(Order order)
         {
             return new ReturnOrderDto

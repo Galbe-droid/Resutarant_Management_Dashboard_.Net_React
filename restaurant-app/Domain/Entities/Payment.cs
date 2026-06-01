@@ -10,5 +10,6 @@ namespace Template_restaurant_app.Domain.Entities
         public decimal Amount { get; set; }
         public DateTimeOffset PaymentDate { get; set; } = DateTimeOffset.UtcNow;
         public PaymentMethod PaymentMethod { get; set; }
+        public bool IsDeleted { get; set; } = false;
     }
 }

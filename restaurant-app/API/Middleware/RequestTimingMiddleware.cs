@@ -23,42 +23,41 @@ namespace Template_restaurant_app.API.Middleware
                 return;
             }
 
-            var stopwatch = Stopwatch.StartNew();
+            var username =
+                context.User?.Identity?.IsAuthenticated == true
+                ? context.User.Identity.Name
+                : "Anonymous";
 
-            await _next(context);
-
-            stopwatch.Stop();
-
-            if (stopwatch.ElapsedMilliseconds > 1000)
-            {
-                Log.Warning(
-                    "Slow Request: {Method} {Path} took {Elapsed} ms",
-                    context.Request.Method,
-                    context.Request.Path,
-                    stopwatch.ElapsedMilliseconds
-                );
-            }
-
-            Log.Information(
-                "HTTP {Method} {Path} responded {StatusCode} in {Elapsed:0.0000} ms",
-                context.Request.Method,
-                context.Request.Path,
-                context.Response.StatusCode,
-                stopwatch.Elapsed.TotalMilliseconds
-            );
-
-            var username = context.User?.Identity?.IsAuthenticated == true ? context.User.Identity.Name : "Anonymous";
+            var userId =
+                context.User?.FindFirst(ClaimTypes.NameIdentifier)
+                ?.Value ?? "Unknown";
 
             using (LogContext.PushProperty("Username", username))
-            {
-                await _next(context);
-            }
-
-            var userId = context.User?.FindFirst(ClaimTypes.NameIdentifier) ?.Value ?? "Unknown";
-
             using (LogContext.PushProperty("UserId", userId))
             {
+                var stopwatch = Stopwatch.StartNew();
+
                 await _next(context);
+
+                stopwatch.Stop();
+
+                if (stopwatch.ElapsedMilliseconds > 1000)
+                {
+                    Log.Warning(
+                        "Slow Request: {Method} {Path} took {Elapsed} ms",
+                        context.Request.Method,
+                        context.Request.Path,
+                        stopwatch.ElapsedMilliseconds
+                    );
+                }
+
+                Log.Information(
+                    "HTTP {Method} {Path} responded {StatusCode} in {Elapsed:0.0000} ms",
+                    context.Request.Method,
+                    context.Request.Path,
+                    context.Response.StatusCode,
+                    stopwatch.Elapsed.TotalMilliseconds
+                );
             }
         }
     }

@@ -90,6 +90,13 @@ namespace Template_restaurant_app.Application.Services
 
             var token = _jwt.GenerateToken(user);
 
+            var activeTokens = await _dBContext.RefreshTokens.Where(r => r.UserId == user.Id && !r.IsRevoked).ToListAsync();
+
+            foreach (var tok in activeTokens)
+            {
+                tok.IsRevoked = true;
+            }
+
             var refresh = new RefreshToken
             {
                 Token = _jwt.GenerateRefreshToken(),
@@ -98,6 +105,9 @@ namespace Template_restaurant_app.Application.Services
             };           
 
             _dBContext.RefreshTokens.Add(refresh);
+
+            await RemoveExpiredTokens();
+
             await _dBContext.SaveChangesAsync();
 
             Console.WriteLine("Cheguei aqui 1: " + login.Login + ", " + login.Password);
@@ -132,6 +142,8 @@ namespace Template_restaurant_app.Application.Services
             _dBContext.RefreshTokens.Add(newRefresh);
 
             var token = _jwt.GenerateToken(stored.User);
+
+            await RemoveExpiredTokens();
 
             await _dBContext.SaveChangesAsync();
 
@@ -181,6 +193,19 @@ namespace Template_restaurant_app.Application.Services
             await _dBContext.SaveChangesAsync();
 
             return (true, null);
+        }
+
+        private async Task RemoveExpiredTokens()
+        {
+            var expiredTokens = await _dBContext.RefreshTokens
+                .Where(r =>
+                    r.IsRevoked &&
+                    r.ExpiresAt < DateTime.UtcNow)
+                .ToListAsync();
+
+            _dBContext.RefreshTokens.RemoveRange(expiredTokens);
+
+            await _dBContext.SaveChangesAsync();
         }
     }
 }

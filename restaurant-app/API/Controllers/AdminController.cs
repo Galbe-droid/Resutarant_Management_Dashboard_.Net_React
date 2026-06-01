@@ -15,7 +15,7 @@ namespace Template_restaurant_app.API.Controllers
         //User Management Endpoints
         [HttpPost]
         [Route("create-account")]
-        public async Task<IActionResult> CreateRestaurantAccount([FromBody] RegisterUser register)
+        public async Task<IActionResult> CreateRestaurantAccount([FromBody] RegisterRestaurantUser register)
         {
             return null;
         }

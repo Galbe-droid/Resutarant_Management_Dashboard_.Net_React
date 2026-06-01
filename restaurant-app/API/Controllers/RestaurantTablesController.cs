@@ -7,7 +7,6 @@ using System.Security.Claims;
 using Template_restaurant_app.Application.Dtos.Table;
 using Template_restaurant_app.Application.Interfaces;
 using Template_restaurant_app.Domain.Constant;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Template_restaurant_app.API.Controllers
 {

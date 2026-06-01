@@ -56,6 +56,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRestaurantTableService, RestaurantTableService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<JwtService>();
 
 // Swagger configuration with JWT authentication
@@ -144,9 +145,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseMiddleware<ExceptionMiddleware>();
-app.UseMiddleware<RequestTimingMiddleware>();
-
 app.UseHttpsRedirection();
 
 app.UseCors("AllowFrontend");
@@ -154,6 +152,9 @@ app.UseCors("AllowFrontend");
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<RequestTimingMiddleware>();
 
 app.MapControllers();
 

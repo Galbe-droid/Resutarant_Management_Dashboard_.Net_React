@@ -28,5 +28,15 @@ namespace Template_restaurant_app.API.Mappers
                 Products = ProductMapping.ToReturnToListProductDtos(category.Products) 
             };
         }
+
+        public static List<ReturnCategoryDto> ToReturnToListCategoryDtos(List<Category> categories)
+        {
+            var returnCategories = new List<ReturnCategoryDto>();
+            foreach (var category in categories)
+            {
+                returnCategories.Add(ToReturnCategory(category));
+            }
+            return returnCategories;
+        }
     }
 }

@@ -11,6 +11,7 @@ namespace Template_restaurant_app.API.Mappers
             {
                 OrderId = create.OrderId,
                 Order = order,
+                Amount = order.TotalAmount,
                 PaymentMethod = create.PaymentMethod
             };
         }
@@ -19,6 +20,7 @@ namespace Template_restaurant_app.API.Mappers
             if(update.OrderId != payment.OrderId)
             {
                 payment.OrderId = update.OrderId;
+                payment.Amount = order.TotalAmount;
                 payment.Order = order;
             }
             
@@ -35,6 +37,16 @@ namespace Template_restaurant_app.API.Mappers
                 Amount = payment.Amount,
                 PaymentMethod = payment.PaymentMethod
             };
+        }
+
+        public static List<ReturnPaymentDto> ToReturnPaymentDtoList(List<Payment> payments)
+        {
+            var returnPayments = new List<ReturnPaymentDto>();
+            foreach (var payment in payments)
+            {
+                returnPayments.Add(ToReturnPaymentDto(payment));
+            }
+            return returnPayments;
         }
     }
 }

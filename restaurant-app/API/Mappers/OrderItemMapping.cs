@@ -14,7 +14,8 @@ namespace Template_restaurant_app.API.Mappers
                 ProductId = product.Id,
                 Product = product,
                 ProductName = product.Name,
-                Quantity = create.Quantity
+                Quantity = create.Quantity,
+                TotalPrice = product.Price * create.Quantity
             };
         }
         public static ReturnOrderItemDto ToReturnOrderItem(OrderItem orderItem)

@@ -46,8 +46,7 @@ namespace Template_restaurant_app.API.Mappers
                 Id = table.Id,
                 Number = table.Number,
                 Capacity = table.Capacity,
-                Orders = OrderMapping.ToReturnOrders(table.Orders.ToList()),
-                TableStatus = (int)table.TableStatus,
+                TableStatus = table.TableStatus,
                 ReservationName = table.ReservationName,
                 ReservationTime = table.ReservationTime,
             };

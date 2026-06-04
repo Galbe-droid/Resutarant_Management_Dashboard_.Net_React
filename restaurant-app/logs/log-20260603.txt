@@ -1,0 +1,53 @@
+2026-06-03 14:19:58.007 -03:00 [WRN] Entity 'User' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-06-03 14:19:59.272 -03:00 [INF] Executed DbCommand (33ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-03 14:19:59.326 -03:00 [INF] Executed DbCommand (28ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-06-03 14:19:59.331 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-03 14:19:59.337 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-06-03 14:19:59.370 -03:00 [INF] Executed DbCommand (19ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-06-03 14:19:59.391 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-06-03 14:19:59.585 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Roles] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-03 14:19:59.615 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[IsDeleted] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-03 14:19:59.633 -03:00 [INF] Executed DbCommand (3ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]
+        WHERE [c].[Name] = N'Other') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-03 14:19:59.641 -03:00 [INF] restaurant_app starting...
+2026-06-03 14:19:59.766 -03:00 [INF] restaurant_app started successfully.
+2026-06-03 14:19:59.786 -03:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-03 14:20:00.036 -03:00 [INF] Now listening on: https://localhost:7135
+2026-06-03 14:20:00.037 -03:00 [INF] Now listening on: http://localhost:5092
+2026-06-03 14:20:00.124 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-03 14:20:00.126 -03:00 [INF] Hosting environment: Development
+2026-06-03 14:20:00.128 -03:00 [INF] Content root path: F:\Projetos csharp\Restaurante\restaurant-app
+2026-06-03 14:20:00.626 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/index.html - null null
+2026-06-03 14:20:00.782 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/index.html - 200 null text/html;charset=utf-8 163.9054ms
+2026-06-03 14:20:00.804 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-03 14:20:00.811 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 6.7081ms
+2026-06-03 14:20:00.841 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_vs/browserLink - null null
+2026-06-03 14:20:00.877 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_vs/browserLink - 200 null text/javascript; charset=UTF-8 36.4624ms
+2026-06-03 14:20:01.017 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - null null
+2026-06-03 14:20:01.040 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 23.7719ms

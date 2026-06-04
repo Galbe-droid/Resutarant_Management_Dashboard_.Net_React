@@ -4,6 +4,7 @@ using Template_restaurant_app.Application.Common;
 using Template_restaurant_app.Application.Dtos.Order;
 using Template_restaurant_app.Application.Dtos.OrderItem;
 using Template_restaurant_app.Application.Interfaces;
+using Template_restaurant_app.Domain.Enum;
 using Template_restaurant_app.Repository;
 
 namespace Template_restaurant_app.Application.Services
@@ -41,14 +42,20 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var getTable = await _context.RestaurantTables.AsNoTracking().FirstOrDefaultAsync(t => t.Id == create.TableId);
+            var getTable = await _context.RestaurantTables.FirstOrDefaultAsync(t => t.Id == create.TableId);
 
             if (getTable == null)
             {
                 return Result<ReturnOrderDto>.Fail("Table not found");
             }
 
+            if(getTable.TableStatus == TableStatus.Occupied)
+            {
+                return Result<ReturnOrderDto>.Fail("Table is not available");
+            }
+
             var order = OrderMapping.ToOrder(getTable);
+            getTable.TableStatus = TableStatus.Occupied;
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
@@ -82,14 +89,24 @@ namespace Template_restaurant_app.Application.Services
                 return Result<ReturnOrderDto>.Fail("Order not found");
             }
 
-            var table = await _context.RestaurantTables.AsNoTracking().FirstOrDefaultAsync(t => t.Id == update.RestaurantTable.Id);
+            var oldTable = await _context.RestaurantTables.FirstOrDefaultAsync(t => t.Id == order.TableId);
+
+            if (oldTable == null)
+            {
+                return Result<ReturnOrderDto>.Fail("Current table not found");
+            }
+
+            var table = await _context.RestaurantTables.FirstOrDefaultAsync(t => t.Id == update.RestaurantTableId);
 
             if (table == null)
             {
-                return Result<ReturnOrderDto>.Fail("Table not found");
+                return Result<ReturnOrderDto>.Fail("New table not found");
             }
 
-            order = OrderMapping.ToUpdateOrder(order, table);
+            oldTable.TableStatus = TableStatus.Available;
+            table.TableStatus = TableStatus.Occupied;
+
+            order = OrderMapping.ToUpdateOrder(order, table.Id);
             await _context.SaveChangesAsync();
             return Result<ReturnOrderDto>.Ok(OrderMapping.ToReturnOrder(order));
         }
@@ -105,7 +122,7 @@ namespace Template_restaurant_app.Application.Services
                 return Result<ReturnOrderDto>.Fail("Order not found");
             }
 
-            var product = await _context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == update.itemId);
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == update.itemId);
 
             if (product == null)
             {
@@ -114,9 +131,10 @@ namespace Template_restaurant_app.Application.Services
 
             var createOrderItem = OrderItemMapping.ToOrderItem(update, order, product);
 
-            order.TotalAmount = await _context.OrderItems.Where(i => i.OrderId == order.Id).SumAsync(i => i.TotalPrice);
             _context.OrderItems.Add(createOrderItem);
             await _context.SaveChangesAsync();
+
+            await UpdateOrderTotalAmount(id);
 
             var updatedOrder = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
 
@@ -128,29 +146,38 @@ namespace Template_restaurant_app.Application.Services
             return Result<ReturnOrderDto>.Ok(OrderMapping.ToReturnOrder(updatedOrder));
         }     
 
-        public async Task<Result<ReturnOrderDto>> UpdateOrderItemsAsync(Guid id, Guid itemId, int quantity, Guid userId)
+        public async Task<Result<ReturnOrderDto>> UpdateOrderItemsAsync(Guid orderId, ReceiveOrderItemDto update, Guid userId)
         {
             _context.CurrentUserId = userId;
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = _context.Orders.FirstOrDefault(o => o.Id == orderId);
 
             if (order == null)
             {
                 return Result<ReturnOrderDto>.Fail("Order not found");
             }
 
-            var orderItem = await _context.OrderItems.FirstOrDefaultAsync(i => i.Id == itemId && i.OrderId == id);
+            var orderItem = await _context.OrderItems.FirstOrDefaultAsync(i => i.Id == update.itemId && i.OrderId == orderId);
 
             if (orderItem == null)
             {
                 return Result<ReturnOrderDto>.Fail("Order item not found");
             }
-            
-            orderItem.Quantity = quantity;
-            order.TotalAmount = await _context.OrderItems.Where(i => i.OrderId == order.Id).SumAsync(i => i.TotalPrice);
+
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == orderItem.ProductId);
+
+            if (product == null)
+            {
+                return Result<ReturnOrderDto>.Fail("Product not found");
+            }
+
+            orderItem = OrderItemMapping.ToUpdateOrderItem(orderItem, update, product);
+
             await _context.SaveChangesAsync();
 
-            var updatedOrder = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
+            await UpdateOrderTotalAmount(orderId);
+
+            var updatedOrder = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == orderId);
 
             if (updatedOrder != null)
             {
@@ -179,8 +206,9 @@ namespace Template_restaurant_app.Application.Services
             }
 
             _context.OrderItems.Remove(orderItem);
-            order.TotalAmount = await _context.OrderItems.Where(i => i.OrderId == order.Id).SumAsync(i => i.TotalPrice);
             await _context.SaveChangesAsync();
+
+            await UpdateOrderTotalAmount(id);
 
             var updatedOrder = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
 
@@ -203,10 +231,28 @@ namespace Template_restaurant_app.Application.Services
                 return Result<bool>.Fail("Order not found");
             }
 
-            order.Status = Domain.Enum.OrderStatus.Cancelled;
+            var table = await _context.RestaurantTables.FirstOrDefaultAsync(t => t.Id == order.TableId);
+
+            if(table == null)
+            {
+                return Result<bool>.Fail("Table not found");
+            }
+
+            table.TableStatus = TableStatus.Available;
+            order.Status = OrderStatus.Cancelled;
+
             await _context.SaveChangesAsync();
             return Result<bool>.Ok(true);
         }
 
+        private async Task UpdateOrderTotalAmount(Guid orderId)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == orderId);
+            if (order != null)
+            {
+                order.TotalAmount = await _context.OrderItems.Where(i => i.OrderId == orderId).SumAsync(i => i.TotalPrice);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

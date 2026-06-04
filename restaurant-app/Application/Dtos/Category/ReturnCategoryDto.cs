@@ -7,6 +7,6 @@ namespace Template_restaurant_app.Application.Dtos.Category
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public string Name { get; set; }
-        public List<ReturnToListProductDto> Products { get; set; }
+        public List<ReturnToListProductDto> Products { get; set; } = new List<ReturnToListProductDto>();
     }
 }

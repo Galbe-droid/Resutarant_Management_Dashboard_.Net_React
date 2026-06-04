@@ -4,6 +4,6 @@ namespace Template_restaurant_app.Application.Dtos.Order
 {
     public class UpdateOrderTableDto
     {
-        public RestaurantTable? RestaurantTable { get; set; }
+        public Guid? RestaurantTableId { get; set; }
     }
 }

@@ -4,6 +4,7 @@ using Template_restaurant_app.API.Mappers;
 using Template_restaurant_app.Application.Common;
 using Template_restaurant_app.Application.Dtos.Table;
 using Template_restaurant_app.Application.Interfaces;
+using Template_restaurant_app.Domain.Enum;
 using Template_restaurant_app.Repository;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
@@ -88,8 +89,33 @@ namespace Template_restaurant_app.Application.Services
 
             table = RestaurantTableMapping.ToRestaurantTable(table, change);
 
+            table.TableStatus = TableStatus.Reserved;
+
             await _context.SaveChangesAsync();
 
+            return Result<ReturnTableDto>.Ok(RestaurantTableMapping.ToReturnTableDto(table));
+        }
+        
+        public async Task<Result<ReturnTableDto>> CancelReservationAsync(Guid id, Guid userId)
+        {
+            _context.CurrentUserId = userId;
+
+            var table = await _context.RestaurantTables.FirstOrDefaultAsync(t => t.Id == id);
+
+            if (table == null)
+            {
+                return Result<ReturnTableDto>.Fail("Table not found.");
+            }
+
+            var change = new ChangeTableStatusDto
+            {
+                ReservationName = null,
+                ReservationTime = null
+            };
+
+            table = RestaurantTableMapping.ToRestaurantTable(table, change);
+            table.TableStatus = TableStatus.Available;
+            await _context.SaveChangesAsync();
             return Result<ReturnTableDto>.Ok(RestaurantTableMapping.ToReturnTableDto(table));
         }
 

@@ -49,7 +49,7 @@ namespace Template_restaurant_app.API.Controllers
             return BadRequest();
         }
         [Authorize(Roles = $"{Roles.Admin}")]
-        [HttpPost]
+        [HttpPut]
         [Route("update/{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] UpdateProductDto update)
         {

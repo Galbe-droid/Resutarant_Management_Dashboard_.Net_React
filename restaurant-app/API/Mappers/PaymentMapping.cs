@@ -15,15 +15,8 @@ namespace Template_restaurant_app.API.Mappers
                 PaymentMethod = create.PaymentMethod
             };
         }
-        public static Payment ToPayment(UpdatePaymentDto update, Order order, Payment payment)
-        {
-            if(update.OrderId != payment.OrderId)
-            {
-                payment.OrderId = update.OrderId;
-                payment.Amount = order.TotalAmount;
-                payment.Order = order;
-            }
-            
+        public static Payment ToPayment(UpdatePaymentDto update, Payment payment)
+        {            
             payment.PaymentMethod = update.PaymentMethod;
             return payment;
         }
@@ -33,7 +26,6 @@ namespace Template_restaurant_app.API.Mappers
             {
                 Id = payment.Id,
                 OrderId = payment.OrderId,
-                Order = OrderMapping.ToReturnOrder(payment.Order),
                 Amount = payment.Amount,
                 PaymentMethod = payment.PaymentMethod
             };

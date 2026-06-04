@@ -79,6 +79,13 @@ namespace Template_restaurant_app.API.Controllers
             _logger.LogInformation("Attempt of reserving a table for user {User}", User.FindFirstValue(ClaimTypes.Name));
             return Ok(await _restaurantTableService.ReservationAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!), change));
         }
+        [HttpPut]
+        [Route("cancel-reservation/{id}")]
+        public async Task<IActionResult> CancelReservation(Guid id)
+        {
+            _logger.LogInformation("Attempt of canceling a reservation for user {User}", User.FindFirstValue(ClaimTypes.Name));
+            return Ok(await _restaurantTableService.CancelReservationAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+        }
 
         [HttpDelete]
         [Route("delete/{id}")]

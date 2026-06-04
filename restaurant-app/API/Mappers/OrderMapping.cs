@@ -12,16 +12,13 @@ namespace Template_restaurant_app.API.Mappers
             return new Order
             {
                 TableId = table.Id,
-                Table = table
             };
         }
 
-        public static Order ToUpdateOrder(Order order, RestaurantTable? update = null)
+        public static Order ToUpdateOrder(Order order, Guid update)
         {
-            if(update != null)
-            {
-                order.Table.Number = update.Number;
-            }
+            order.TableId = update;
+
             return order;
         }
         public static ReturnOrderDto ToReturnOrder(Order order)
@@ -30,7 +27,6 @@ namespace Template_restaurant_app.API.Mappers
             {
                 Id = order.Id,
                 TableId = order.TableId,
-                Table = RestaurantTableMapping.ToReturnTableDto(order.Table),
                 OrderDate = order.OrderDate,
                 TotalAmount = order.TotalAmount,
                 Status = order.Status,

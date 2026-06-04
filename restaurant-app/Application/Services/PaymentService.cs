@@ -55,7 +55,15 @@ namespace Template_restaurant_app.Application.Services
                 return Result<ReturnPaymentDto>.Fail("Order cannot be paid");
             }
 
+            var table = await _context.RestaurantTables.FirstOrDefaultAsync(t => t.Id == order.TableId);
+
+            if (table == null)
+            {
+                return Result<ReturnPaymentDto>.Fail("Table not found");
+            }
+
             order.Status = OrderStatus.Paid;
+            table.TableStatus = TableStatus.Available;
             var payment = PaymentMapping.ToPayment(create, order);
 
             await _context.Payments.AddAsync(payment);
@@ -68,18 +76,6 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == update.OrderId);
-            
-            if (order == null)
-            {
-                return Result<ReturnPaymentDto>.Fail("Order not found");
-            }
-
-            if (order.Status == OrderStatus.Paid || order.Status == OrderStatus.Finished || order.Status == OrderStatus.Cancelled)
-            {
-                return Result<ReturnPaymentDto>.Fail("Order cannot be paid");
-            }
-
             var payment = _context.Payments.FirstOrDefault(p => p.Id == id);
 
             if (payment == null)
@@ -87,7 +83,7 @@ namespace Template_restaurant_app.Application.Services
                 return Result<ReturnPaymentDto>.Fail("Payment not found");
             }
 
-            payment = PaymentMapping.ToPayment(update, order, payment);
+            payment = PaymentMapping.ToPayment(update, payment);
             await _context.SaveChangesAsync();
 
             return Result<ReturnPaymentDto>.Ok(PaymentMapping.ToReturnPaymentDto(payment));

@@ -15,7 +15,6 @@ namespace Template_restaurant_app.API.Mappers
                 Description = create.Description,
                 ImageURL = create.ImageURL,
                 CategoryId = category.Id,
-                Category = category
             };
         }
 
@@ -39,12 +38,12 @@ namespace Template_restaurant_app.API.Mappers
         {
             return new ReturnProductDto
             {
+                Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
                 Description = product.Description,
                 ImageURL = product.ImageURL,
                 CategoryId = product.CategoryId,
-                Category = CategoryMapping.ToReturnCategory(product.Category),
             };
         }
 

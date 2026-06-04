@@ -12,8 +12,8 @@ namespace Template_restaurant_app.Application.Interfaces
         public Task<Result<ReturnOrderDto>> UpdateStatusAsync(Guid id, UpdateOrderStatusDto update, Guid userId);
         public Task<Result<ReturnOrderDto>> UpdateTableAsync(Guid id, UpdateOrderTableDto update, Guid userId);
         public Task<Result<ReturnOrderDto>> AddOrderItemsAsync(Guid id, ReceiveOrderItemDto update, Guid userId);
-        public Task<Result<ReturnOrderDto>> UpdateOrderItemsAsync(Guid id, Guid itemId, int quantity, Guid userId);
-        public Task<Result<ReturnOrderDto>> RemoveOrderItemsAsync(Guid id, Guid itemId, Guid userId);   
+        public Task<Result<ReturnOrderDto>> UpdateOrderItemsAsync(Guid id, ReceiveOrderItemDto update, Guid userId);
+        public Task<Result<ReturnOrderDto>> RemoveOrderItemsAsync(Guid id, Guid orderId, Guid userId);   
         public Task<Result<bool>> DeleteAsync(Guid id, Guid userId);
     }
 }

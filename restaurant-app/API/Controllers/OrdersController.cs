@@ -97,7 +97,14 @@ namespace Template_restaurant_app.API.Controllers
             if(ModelState.IsValid)
             {
                 _logger.LogInformation("Attempt of updating items in an Order for user {User}", User.FindFirstValue(ClaimTypes.Name));
-                return Ok(await _orderService.UpdateOrderItemsAsync(id, itemId, quantity, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+
+                ReceiveOrderItemDto item = new ReceiveOrderItemDto
+                {
+                    itemId = itemId,
+                    Quantity = quantity
+                };
+
+                return Ok(await _orderService.UpdateOrderItemsAsync(id, item, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
             }
             _logger.LogInformation("Attempt of updating items in an Order for user {User} failed due to invalid model state", User.FindFirstValue(ClaimTypes.Name));
             return BadRequest();

@@ -1,4 +1,5 @@
-﻿using Template_restaurant_app.Application.Dtos.OrderItem;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Template_restaurant_app.Application.Dtos.OrderItem;
 using Template_restaurant_app.Domain.Entities;
 
 namespace Template_restaurant_app.API.Mappers
@@ -18,15 +19,23 @@ namespace Template_restaurant_app.API.Mappers
                 TotalPrice = product.Price * create.Quantity
             };
         }
+        public static OrderItem ToUpdateOrderItem(OrderItem orderItem, ReceiveOrderItemDto update, Product product)
+        {
+            orderItem.OrderId = orderItem.OrderId;
+            orderItem.ProductId = product.Id;
+            orderItem.ProductName = product.Name;
+            orderItem.Quantity = update.Quantity;
+            orderItem.TotalPrice = product.Price * update.Quantity;
+
+            return orderItem;
+        }
         public static ReturnOrderItemDto ToReturnOrderItem(OrderItem orderItem)
         {
             return new ReturnOrderItemDto
             {
                 Id = orderItem.Id,
                 OrderId = orderItem.OrderId,
-                Order = OrderMapping.ToReturnOrder(orderItem.Order),
                 ProductId = orderItem.ProductId,
-                Product = ProductMapping.ToReturnProduct(orderItem.Product),
                 ProductName = orderItem.ProductName,
                 Quantity = orderItem.Quantity,
                 TotalPrice = orderItem.TotalPrice

@@ -43,3 +43,48 @@ Domain
 Repository
 
 O projeto utiliza DTOs, Services, Entity Configurations e autenticação baseada em Claims e Roles para manter a aplicação organizada e escalável.
+
+FLOWCHART
+
+```mermaid
+flowchart LR
+
+    A([FrontEnd]) --> B[Auth Service]
+    B --Valid Login--> C{Roles}
+    C -------> D[Admin]
+    C ----> E[Waiter]
+    C --> F[Cashier] 
+
+    D --> AccountCreation
+    AccountCreation --> Roles{SetRoles}
+    Roles --> Waiter[Waiter]
+    Roles --> Cashier[Cashier] 
+
+    D --> AccountModification/Delete
+    D --> PreviousReceipts
+    D --> PreviousOrders
+    D --> ConsuptionMetrics
+    D --> Create/ManageTables
+    D --> CreateCategories
+    D --> CreateProducts 
+
+    CreateProducts --> Database@{shape: cyl, label:"Database"}
+    CreateCategories --> Database
+    Waiter --> Database
+    Cashier --> Database
+    Create/ManageTables --> Database 
+
+    E --> CreateOrder
+    Products ---> AddOrderItems
+    CreateOrder ---> AddOrderItems
+    E --> UpdateOrder
+    E --> CloseOrder 
+
+    CloseOrder --> AwaitingPayment
+    AwaitingPayment --> ConfirmPayment
+    AwaitingPayment ---> FinalizedOrder
+    FinalizedOrder ---> Database
+    F --> ConfirmPayment
+    CloseOrder --> ConfirmPayment
+    ConfirmPayment --> Database@{shape: cyl, label:"Database"}
+```

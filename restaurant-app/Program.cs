@@ -1,4 +1,5 @@
 using DotNetEnv;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
@@ -10,6 +11,7 @@ using Template_restaurant_app.Application.Common.Setting;
 using Template_restaurant_app.Application.Interfaces;
 using Template_restaurant_app.Application.Services;
 using Template_restaurant_app.Data.Seed;
+using Template_restaurant_app.Domain.Entities.UserRelated;
 using Template_restaurant_app.Repository;
 
 // Configure Serilog for logging to console and file with daily rolling
@@ -55,12 +57,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IRestaurantTableService, RestaurantTableService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<PasswordHasher<User>>();  
 
 // Swagger configuration with JWT authentication
 builder.Services.AddSwaggerGen(options =>

@@ -9,5 +9,6 @@ namespace Template_restaurant_app.Application.Dtos.Payment
         public Guid OrderId { get; set; }
         public decimal Amount { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
+        public DateTimeOffset CreateAt { get; set; }
     }
 }

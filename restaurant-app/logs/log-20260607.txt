@@ -437,3 +437,109 @@ WHERE [Id] = @p1;
 2026-06-07 14:37:31.264 -03:00 [INF] Executed endpoint 'Template_restaurant_app.API.Controllers.AdminController.DeleteUser (Template restaurant-app)'
 2026-06-07 14:37:31.265 -03:00 [INF] HTTP DELETE /api/Admin/delete-user/B3072C59-18B4-4C91-5F17-08DEC4BB12F9 responded 200 in 26.0593 ms
 2026-06-07 14:37:31.267 -03:00 [INF] Request finished HTTP/2 DELETE https://localhost:7135/api/Admin/delete-user/B3072C59-18B4-4C91-5F17-08DEC4BB12F9 - 200 null application/json; charset=utf-8 33.7411ms
+2026-06-07 15:17:09.725 -03:00 [WRN] Entity 'User' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-06-07 15:17:10.325 -03:00 [INF] Executed DbCommand (22ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-07 15:17:10.360 -03:00 [INF] Executed DbCommand (18ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-06-07 15:17:10.369 -03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-07 15:17:10.372 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-06-07 15:17:10.389 -03:00 [INF] Executed DbCommand (4ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-06-07 15:17:10.406 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-06-07 15:17:10.574 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Roles] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-07 15:17:10.599 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[IsDeleted] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-07 15:17:10.614 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]
+        WHERE [c].[Name] = N'Other') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-07 15:17:10.622 -03:00 [INF] restaurant_app starting...
+2026-06-07 15:17:10.829 -03:00 [INF] restaurant_app started successfully.
+2026-06-07 15:17:10.852 -03:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-07 15:17:11.053 -03:00 [INF] Now listening on: https://localhost:7135
+2026-06-07 15:17:11.055 -03:00 [INF] Now listening on: http://localhost:5092
+2026-06-07 15:17:11.147 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-07 15:17:11.149 -03:00 [INF] Hosting environment: Development
+2026-06-07 15:17:11.150 -03:00 [INF] Content root path: F:\Projetos csharp\Restaurante\restaurant-app
+2026-06-07 15:17:11.533 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/index.html - null null
+2026-06-07 15:17:11.693 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/index.html - 200 null text/html;charset=utf-8 168.1574ms
+2026-06-07 15:17:11.714 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-07 15:17:11.721 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 6.9175ms
+2026-06-07 15:17:11.745 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_vs/browserLink - null null
+2026-06-07 15:17:11.784 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_vs/browserLink - 200 null text/javascript; charset=UTF-8 38.5037ms
+2026-06-07 15:17:11.940 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - null null
+2026-06-07 15:17:11.967 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 27.4035ms
+2026-06-07 15:21:26.386 -03:00 [WRN] Entity 'User' has a global query filter defined and is the required end of a relationship with the entity 'UserRole'. This may lead to unexpected results when the required entity is filtered out. Either configure the navigation as optional, or define matching query filters for both entities in the navigation. See https://go.microsoft.com/fwlink/?linkid=2131316 for more information.
+2026-06-07 15:21:26.875 -03:00 [INF] Executed DbCommand (23ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-07 15:21:26.913 -03:00 [INF] Executed DbCommand (21ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-06-07 15:21:26.918 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT 1
+2026-06-07 15:21:26.921 -03:00 [INF] Executed DbCommand (1ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+2026-06-07 15:21:26.935 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT [MigrationId], [ProductVersion]
+FROM [__EFMigrationsHistory]
+ORDER BY [MigrationId];
+2026-06-07 15:21:26.953 -03:00 [INF] No migrations were applied. The database is already up to date.
+2026-06-07 15:21:27.115 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Roles] AS [r]) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-07 15:21:27.140 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Users] AS [u]
+        WHERE [u].[IsDeleted] = CAST(0 AS bit)) THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-07 15:21:27.155 -03:00 [INF] Executed DbCommand (2ms) [Parameters=[], CommandType='"Text"', CommandTimeout='30']
+SELECT CASE
+    WHEN EXISTS (
+        SELECT 1
+        FROM [Categories] AS [c]
+        WHERE [c].[Name] = N'Other') THEN CAST(1 AS bit)
+    ELSE CAST(0 AS bit)
+END
+2026-06-07 15:21:27.163 -03:00 [INF] restaurant_app starting...
+2026-06-07 15:21:27.271 -03:00 [INF] restaurant_app started successfully.
+2026-06-07 15:21:27.294 -03:00 [INF] User profile is available. Using 'C:\Users\gabri\AppData\Local\ASP.NET\DataProtection-Keys' as key repository and Windows DPAPI to encrypt keys at rest.
+2026-06-07 15:21:27.526 -03:00 [INF] Now listening on: https://localhost:7135
+2026-06-07 15:21:27.528 -03:00 [INF] Now listening on: http://localhost:5092
+2026-06-07 15:21:27.617 -03:00 [INF] Application started. Press Ctrl+C to shut down.
+2026-06-07 15:21:27.619 -03:00 [INF] Hosting environment: Development
+2026-06-07 15:21:27.621 -03:00 [INF] Content root path: F:\Projetos csharp\Restaurante\restaurant-app
+2026-06-07 15:21:27.803 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/index.html - null null
+2026-06-07 15:21:27.968 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/index.html - 200 null text/html;charset=utf-8 173.0343ms
+2026-06-07 15:21:27.983 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - null null
+2026-06-07 15:21:27.990 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_framework/aspnetcore-browser-refresh.js - 200 16531 application/javascript; charset=utf-8 7.2097ms
+2026-06-07 15:21:28.020 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/_vs/browserLink - null null
+2026-06-07 15:21:28.057 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/_vs/browserLink - 200 null text/javascript; charset=UTF-8 37.1557ms
+2026-06-07 15:21:28.216 -03:00 [INF] Request starting HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - null null
+2026-06-07 15:21:28.247 -03:00 [INF] Request finished HTTP/2 GET https://localhost:7135/swagger/v1/swagger.json - 200 null application/json;charset=utf-8 30.5689ms

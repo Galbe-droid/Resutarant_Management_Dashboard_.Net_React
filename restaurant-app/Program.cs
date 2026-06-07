@@ -93,6 +93,17 @@ builder.Services.AddSwaggerGen(options =>
             new string[] {}
         }
     });
+
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Restaurant Management Dashboard API",
+        Version = "v1.0.0",
+        Description = "API for managing users, products, tables, orders and payments.",
+        License = new OpenApiLicense
+        {
+            Name = "MIT"
+        }
+    });
 });
 
 //Database context configuration (uncomment and replace 'null' with your DbContext class)
@@ -151,6 +162,12 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseSwaggerUI(options =>
+{
+    options.DocumentTitle = "Restaurant Management Dashboard";
+    options.SwaggerEndpoint("/swagger/v1/swagger.json","Restaurant Management Dashboard API v1");
+});
 
 app.UseHttpsRedirection();
 

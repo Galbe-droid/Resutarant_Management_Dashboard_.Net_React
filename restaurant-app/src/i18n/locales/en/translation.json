@@ -1,0 +1,9 @@
+{
+  "login": {
+    "title": "Restaurant Dashboard",
+    "subtitle": "Sign in to continue",
+    "username": "Email or username",
+    "password": "Password",
+    "button": "Login"
+  }
+}

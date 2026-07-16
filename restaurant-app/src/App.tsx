@@ -1,9 +1,15 @@
 import {Login} from "./pages/Login.tsx";
+import {AuthProvider} from "./Providers/AuthProvider.tsx";
+import {BrowserRouter} from "react-router-dom";
 
 function App() {
 
   return (
-      <Login />
+      <AuthProvider>
+        <BrowserRouter>
+          <Login />
+        </BrowserRouter>
+      </AuthProvider>
   )
 }
 

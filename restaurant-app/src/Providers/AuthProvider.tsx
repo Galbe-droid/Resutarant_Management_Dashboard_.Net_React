@@ -6,7 +6,10 @@ import type { User } from "../types/User.ts";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [accessToken, setAccessToken] = useState<string | null>(null);
-    const [userInfo, setUserInfo] = useState<User | null>(null);
+    const [userInfo, setUserInfo] = useState<User | null>(() => {
+        const user = localStorage.getItem("userInfo");
+        return user ? JSON.parse(user) : null;
+    });
 
     async function login(data: LoginRequest)
     {

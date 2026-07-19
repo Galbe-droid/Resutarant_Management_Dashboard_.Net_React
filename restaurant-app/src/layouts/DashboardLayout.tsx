@@ -11,7 +11,8 @@ export function DashboardLayout() {
             <Box
              sx={{
                  flexGrow: 1,
-                 p:3
+                 p:3,
+                 ml: `${240}px`,
              }}
             >
                 <Toolbar/>

@@ -24,6 +24,7 @@ export function Sidebar()
                     width: 240,
                     bgcolor: "background.paper",
                     color: "text.primary",
+                    boxSizing: "border-box",
                     borderRight: (theme) => `1px solid ${theme.palette.divider}`,
                 },
             }}

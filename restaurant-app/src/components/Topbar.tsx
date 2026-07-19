@@ -25,7 +25,7 @@ export function Topbar() {
                     justifyContent: "space-between",
                 }}
             >
-                <Typography sx={{}}>Bem Vindo! {auth.userInfo?.name}</Typography>
+                <Typography>Bem Vindo! {auth.userInfo?.name}</Typography>
 
                 <Typography>{auth.userInfo?.email}</Typography>
 

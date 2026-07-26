@@ -11,6 +11,9 @@ namespace Template_restaurant_app.API.Mappers
             {
                 Number = create.Number,
                 Capacity = create.Capacity,
+                TableStatus = create.tableStatus,
+                ReservationName = create.ReservationName,
+                ReservationTime = create.ReservationTime,
             };
         }
 

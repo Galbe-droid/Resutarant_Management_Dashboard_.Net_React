@@ -1,8 +1,8 @@
 import {type ReactNode, useState} from "react";
 import {AuthContext} from "../contexts/AuthContext.tsx";
 import {loginAuth} from "../api/authApi.ts";
-import type {LoginRequest} from "../types/LoginRequest.ts";
-import type { User } from "../types/User.ts";
+import type {LoginRequest} from "../types/user/LoginRequest.ts";
+import type { User } from "../types/user/User.ts";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
     const [accessToken, setAccessToken] = useState<string | null>(null);

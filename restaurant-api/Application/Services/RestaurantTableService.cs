@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Template_restaurant_app.API.Mappers;
 using Template_restaurant_app.Application.Common;
@@ -34,7 +35,7 @@ namespace Template_restaurant_app.Application.Services
 
             if(table == null)
             {
-                return Result<ReturnTableDto>.Fail("Table not find.");
+                return Result<ReturnTableDto>.NotFound("Table not find.");
             }
 
             return Result<ReturnTableDto>.Ok(RestaurantTableMapping.ToReturnTableDto(table));
@@ -46,7 +47,12 @@ namespace Template_restaurant_app.Application.Services
 
             if(_context.RestaurantTables.Any(t => t.Number == create.Number))
             {
-                return Result<ReturnTableDto>.Fail("Number already used.");
+                return Result<ReturnTableDto>.Validation("Number already used.");
+            }
+
+            if (create.Capacity <= 0)
+            {
+                return Result<ReturnTableDto>.Validation("Capacity cant be zero");
             }
 
             var table = RestaurantTableMapping.ToRestaurantTable(create);
@@ -65,7 +71,20 @@ namespace Template_restaurant_app.Application.Services
 
             if (table == null)
             {
-                return Result<ReturnTableDto>.Fail("Table not found.");
+                return Result<ReturnTableDto>.NotFound("Table not found.");
+            }
+
+            if(update.Number != table.Number)
+            {
+                if (_context.RestaurantTables.Any(t => t.Number == update.Number))
+                {
+                    return Result<ReturnTableDto>.Validation("Number already used.");
+                }
+            }            
+
+            if (update.Capacity <= 0)
+            {
+                return Result<ReturnTableDto>.Validation("Capacity cant be zero");
             }
 
             table = RestaurantTableMapping.ToRestaurantTable(table, update);
@@ -84,7 +103,7 @@ namespace Template_restaurant_app.Application.Services
 
             if (table == null)
             {
-                return Result<ReturnTableDto>.Fail("Table not found.");
+                return Result<ReturnTableDto>.NotFound("Table not found.");
             }
 
             table = RestaurantTableMapping.ToRestaurantTable(table, change);
@@ -104,7 +123,7 @@ namespace Template_restaurant_app.Application.Services
 
             if (table == null)
             {
-                return Result<ReturnTableDto>.Fail("Table not found.");
+                return Result<ReturnTableDto>.NotFound("Table not found.");
             }
 
             var change = new ChangeTableStatusDto
@@ -127,7 +146,7 @@ namespace Template_restaurant_app.Application.Services
 
             if (table == null)
             {
-                return Result<bool>.Fail("Table not found.");
+                return Result<bool>.NotFound("Table not found.");
             }
 
             _context.RestaurantTables.Remove(table);

@@ -7,7 +7,6 @@ export function Sidebar()
         { text: "Dashboard", path: "/dashboard"},
         { text: "Produtos", path: "/products" },
         { text: "Categorias", path: "/categories" },
-        { text: "Mesas", path: "/tables" },
         { text: "Pedidos", path: "/orders" },
         { text: "Pagamentos", path: "/payments" },
         { text: "Usuários", path: "/users" },

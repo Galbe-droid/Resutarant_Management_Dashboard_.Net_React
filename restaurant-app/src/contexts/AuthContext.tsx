@@ -1,6 +1,6 @@
-import type {LoginRequest} from "../types/LoginRequest.ts";
+import type {LoginRequest} from "../types/user/LoginRequest.ts";
 import {createContext} from "react";
-import type {User} from "../types/User.ts";
+import type {User} from "../types/user/User.ts";
 
 interface AuthContextType {
     userInfo: User | null;

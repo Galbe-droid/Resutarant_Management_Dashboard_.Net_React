@@ -2,7 +2,7 @@ import { Box, Button, Card, CardContent, Container, TextField, Typography,} from
 import { useTranslation } from "react-i18next";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../hooks/useAuth.ts";
-import type {LoginRequest} from "../types/LoginRequest.ts";
+import type {LoginRequest} from "../types/user/LoginRequest.ts";
 import {useForm} from "react-hook-form";
 
 export function Login() {

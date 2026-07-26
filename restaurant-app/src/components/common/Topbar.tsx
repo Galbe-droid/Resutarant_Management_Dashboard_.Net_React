@@ -1,5 +1,5 @@
 import {AppBar, Stack, Toolbar, Typography} from "@mui/material";
-import {useAuth} from "../hooks/useAuth.ts";
+import {useAuth} from "../../hooks/useAuth.ts";
 
 export function Topbar() {
     const auth = useAuth();

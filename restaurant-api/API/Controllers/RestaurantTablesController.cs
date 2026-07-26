@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using Serilog;
 using System.Security.Claims;
+using Template_restaurant_app.API.Extensions;
 using Template_restaurant_app.Application.Dtos.Table;
 using Template_restaurant_app.Application.Interfaces;
 using Template_restaurant_app.Domain.Constant;
@@ -29,14 +30,18 @@ namespace Template_restaurant_app.API.Controllers
         [Route("")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _restaurantTableService.GetAllAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _restaurantTableService.GetAllAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+
+            return this.FromResult(result);
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            return Ok(await _restaurantTableService.GetByIdAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _restaurantTableService.GetByIdAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+
+            return this.FromResult(result);
         }
 
         [HttpPost]
@@ -50,7 +55,9 @@ namespace Template_restaurant_app.API.Controllers
             }
 
             _logger.LogInformation("Attempt of creating a table for user {User}", User.FindFirstValue(ClaimTypes.Name));
-            return Ok(await _restaurantTableService.CreateAsync(create, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _restaurantTableService.CreateAsync(create, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+
+            return this.FromResult(result);
         }
 
         [HttpPut]
@@ -64,7 +71,9 @@ namespace Template_restaurant_app.API.Controllers
             }
 
             _logger.LogInformation("Attempt of updating a table for user {User}", User.FindFirstValue(ClaimTypes.Name));
-            return Ok(await _restaurantTableService.UpdateAsync(id, update, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _restaurantTableService.UpdateAsync(id, update, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+
+            return this.FromResult(result);
         }
         [HttpPut]
         [Route("reservation/{id}")]
@@ -77,14 +86,17 @@ namespace Template_restaurant_app.API.Controllers
             }
 
             _logger.LogInformation("Attempt of reserving a table for user {User}", User.FindFirstValue(ClaimTypes.Name));
-            return Ok(await _restaurantTableService.ReservationAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!), change));
+            var result = await _restaurantTableService.ReservationAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!), change);
+
+            return this.FromResult(result);
         }
         [HttpPut]
         [Route("cancel-reservation/{id}")]
         public async Task<IActionResult> CancelReservation(Guid id)
         {
             _logger.LogInformation("Attempt of canceling a reservation for user {User}", User.FindFirstValue(ClaimTypes.Name));
-            return Ok(await _restaurantTableService.CancelReservationAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _restaurantTableService.CancelReservationAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            return this.FromResult(result);
         }
 
         [HttpDelete]
@@ -92,7 +104,9 @@ namespace Template_restaurant_app.API.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             _logger.LogInformation("Attempt of Deleting a table for user {User}", User.FindFirstValue(ClaimTypes.Name));
-            return Ok(await _restaurantTableService.DeleteAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _restaurantTableService.DeleteAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            
+            return this.FromResult(result);
         }
     }
 }

@@ -1,5 +1,5 @@
-import {Topbar} from "../components/Topbar.tsx";
-import {Sidebar} from "../components/Sidebar.tsx";
+import {Topbar} from "../components/common/Topbar.tsx";
+import {Sidebar} from "../components/common/Sidebar.tsx";
 import {Box, Toolbar} from "@mui/material";
 import {Outlet} from "react-router-dom";
 

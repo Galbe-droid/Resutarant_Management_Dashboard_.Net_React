@@ -75,9 +75,25 @@ namespace Template_restaurant_app.API.Controllers
 
             return this.FromResult(result);
         }
+
+        [HttpPut]
+        [Route("status/{id}")]
+        public async Task<IActionResult> StatusChange(Guid id, [FromBody] ChangeTableStatusDto status)
+        {
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning("Failed Attempt of changing status of a table for user {User}", User.FindFirstValue(ClaimTypes.Name));
+                return BadRequest();
+            }
+            _logger.LogInformation("Attempt of changing status of a table for user {User}", User.FindFirstValue(ClaimTypes.Name));
+            var result = await _restaurantTableService.StatusAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!), status);
+
+            return this.FromResult(result);
+        }
+
         [HttpPut]
         [Route("reservation/{id}")]
-        public async Task<IActionResult> Reservation(Guid id, [FromBody] ChangeTableStatusDto change)
+        public async Task<IActionResult> Reservation(Guid id, [FromBody] ResevationTableDto reservation)
         {
             if (!ModelState.IsValid)
             {
@@ -86,7 +102,7 @@ namespace Template_restaurant_app.API.Controllers
             }
 
             _logger.LogInformation("Attempt of reserving a table for user {User}", User.FindFirstValue(ClaimTypes.Name));
-            var result = await _restaurantTableService.ReservationAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!), change);
+            var result = await _restaurantTableService.ReservationAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!), reservation);
 
             return this.FromResult(result);
         }

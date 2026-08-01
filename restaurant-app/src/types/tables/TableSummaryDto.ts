@@ -6,5 +6,5 @@ export interface TableSummaryDto {
     capacity: number;
     tableStatus: TableStatus;
     reservationName?: string;
-    reservationTime?: string;
+    reservationTime?: string | null;
 }

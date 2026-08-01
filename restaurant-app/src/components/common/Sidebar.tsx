@@ -35,7 +35,7 @@ export function Sidebar()
                     key={item.path}
                     disablePadding
                 >
-                    <ListItemButton>
+                    <ListItemButton href={item.path}>
                         <ListItemText
                             sx={{
                                 display: "flex",

@@ -7,7 +7,6 @@ namespace Template_restaurant_app.Application.Dtos.Table
     {
         [Required]
         public TableStatus Status { get; set; }
-        public string? ReservationName { get; set; }
-        public DateTimeOffset? ReservationTime { get; set; }
+        
     }
 }

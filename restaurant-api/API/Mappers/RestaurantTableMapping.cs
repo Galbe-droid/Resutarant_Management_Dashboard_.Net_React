@@ -21,15 +21,13 @@ namespace Template_restaurant_app.API.Mappers
         {
             table.TableStatus = change.Status;
 
-            if(change.ReservationName != null)
-            {
-                table.ReservationName = change.ReservationName;
-            }
+            return table;
+        }
 
-            if (change.ReservationTime != null)
-            {
-                table.ReservationTime = change.ReservationTime;
-            }
+        public static RestaurantTable ToRestaurantTable(RestaurantTable table, ResevationTableDto resevation)
+        {
+            table.ReservationName = resevation.ReservationName;
+            table.ReservationTime = resevation.ReservationTime;
 
             return table;
         }

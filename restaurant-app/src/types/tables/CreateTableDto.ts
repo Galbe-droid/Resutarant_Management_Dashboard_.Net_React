@@ -5,5 +5,5 @@ export interface CreateTableDto {
     capacity: number;
     tableStatus: TableStatus;
     reservationName?: string;
-    reservationTime?: string;
+    reservationTime?: string | null;
 }

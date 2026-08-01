@@ -95,7 +95,7 @@ namespace Template_restaurant_app.Application.Services
 
         }
 
-        public async Task<Result<ReturnTableDto>> ReservationAsync(Guid id, Guid userId, ChangeTableStatusDto change)
+        public async Task<Result<ReturnTableDto>> StatusAsync(Guid id, Guid userId, ChangeTableStatusDto status)
         {
             _context.CurrentUserId = userId;
 
@@ -106,7 +106,25 @@ namespace Template_restaurant_app.Application.Services
                 return Result<ReturnTableDto>.NotFound("Table not found.");
             }
 
-            table = RestaurantTableMapping.ToRestaurantTable(table, change);
+            table = RestaurantTableMapping.ToRestaurantTable(table, status);
+
+            await _context.SaveChangesAsync();
+
+            return Result<ReturnTableDto>.Ok(RestaurantTableMapping.ToReturnTableDto(table));
+        }
+
+        public async Task<Result<ReturnTableDto>> ReservationAsync(Guid id, Guid userId, ResevationTableDto reservation)
+        {
+            _context.CurrentUserId = userId;
+
+            var table = await _context.RestaurantTables.FirstOrDefaultAsync(t => t.Id == id);
+
+            if (table == null)
+            {
+                return Result<ReturnTableDto>.NotFound("Table not found.");
+            }
+
+            table = RestaurantTableMapping.ToRestaurantTable(table, reservation);
 
             table.TableStatus = TableStatus.Reserved;
 
@@ -126,7 +144,7 @@ namespace Template_restaurant_app.Application.Services
                 return Result<ReturnTableDto>.NotFound("Table not found.");
             }
 
-            var change = new ChangeTableStatusDto
+            var change = new ResevationTableDto
             {
                 ReservationName = null,
                 ReservationTime = null

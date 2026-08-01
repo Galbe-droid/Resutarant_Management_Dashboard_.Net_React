@@ -3,14 +3,16 @@ import type {ReturnTableDto} from "../../types/tables/ReturnTableDto.ts";
 import {TableStatus} from "../../enum/TableStatus.ts";
 import {Controller, useForm, useWatch} from "react-hook-form";
 import type {TableFormDto} from "../../types/tables/TableFormDto.ts";
+import {useEffect} from "react";
 
 interface TableFormProps {
     initialValues?: ReturnTableDto
     onSubmit: (data: TableFormDto) => void
+    onCancelReservation?: () => void;
 }
 
-export function TableForm({initialValues, onSubmit}: TableFormProps) {
-    const {register, control, handleSubmit, formState: { errors }} = useForm<TableFormDto>({
+export function TableForm({initialValues, onSubmit, onCancelReservation}: TableFormProps) {
+    const {register, control, handleSubmit, reset, formState: { errors }} = useForm<TableFormDto>({
         defaultValues:{
             number: initialValues?.number ?? 1,
             capacity: initialValues?.capacity ?? 4,
@@ -23,6 +25,21 @@ export function TableForm({initialValues, onSubmit}: TableFormProps) {
         control,
         name: "tableStatus",
     })
+
+    useEffect(() =>{
+        if(!initialValues) return;
+
+        reset({
+            number: initialValues?.number,
+            capacity: initialValues?.capacity,
+            tableStatus: initialValues?.tableStatus,
+            reservationName: initialValues?.reservationName,
+            reservationTime: initialValues?.reservationTime ? new Date(initialValues?.reservationTime)
+                    .toISOString()
+                    .slice(0, 16)
+                : null,
+        })
+    }, [initialValues, reset])
 
     return (
         <Box component={"form"} onSubmit={handleSubmit(onSubmit)}
@@ -42,7 +59,14 @@ export function TableForm({initialValues, onSubmit}: TableFormProps) {
             <FormControl fullWidth>
                 <InputLabel id="table-status-label">Estado</InputLabel>
                 <Controller name={"tableStatus"} control={control} render={({field}) => (
-                    <Select {...field}  labelId="table-status-label" label={"Estado"}>
+                    <Select
+                        {...field}
+                        labelId="table-status-label"
+                        value={field.value}
+                        label={"Estado"}
+                        onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                    }>
                         <MenuItem value={TableStatus.Avaliable}>Avaliable</MenuItem>
                         <MenuItem value={TableStatus.Occupied}>Occupied</MenuItem>
                         <MenuItem value={TableStatus.Reserved}>Reserved</MenuItem>
@@ -60,6 +84,9 @@ export function TableForm({initialValues, onSubmit}: TableFormProps) {
                 <></>
             }
             <Button type={"submit"}>{initialValues ? "Editar Mesa" : "Nova Mesa"}</Button>
+            {initialValues && (
+                <Button color="error" variant="outlined" onClick={onCancelReservation}>Cancelar Reserva</Button>
+            )}
         </Box>
     )
 }

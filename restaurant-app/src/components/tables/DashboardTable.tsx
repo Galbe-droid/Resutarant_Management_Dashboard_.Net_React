@@ -3,23 +3,25 @@ import type {TableStatus} from "../../enum/TableStatus.ts";
 import type {TableSummaryDto} from "../../types/tables/TableSummaryDto.ts";
 import {useNavigate} from "react-router-dom";
 import {mapFormatDate} from "../../mappers/mapFormatDate.tsx";
+import {useTranslation} from "react-i18next";
 
 interface DashboardTableProps {
     tables: TableSummaryDto[] | null;
 }
 
 export function DashboardTable({tables}: DashboardTableProps) {
+    const { t } = useTranslation("table");
     const navigate = useNavigate();
     const getStatusChip = (status: TableStatus) => {
         switch (status) {
             case 0:
-                return <Chip label="Livre" color="success"/>;
+                return <Chip label={t("statusAvaliable")} color="success"/>;
 
             case 1:
-                return <Chip label="Ocupada" color="error"/>;
+                return <Chip label={t("statusOccupied")} color="error"/>;
 
             case 2:
-                return <Chip label="Rerservada" color="warning"/>;
+                return <Chip label={t("statusReserved")} color="warning"/>;
 
             default:
                 return <Chip label={status} />;
@@ -31,11 +33,11 @@ export function DashboardTable({tables}: DashboardTableProps) {
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell sx={{textAlign:"center"}}>Mesa</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>Capacidade</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>Estado</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>Nome Reserva</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>Data Reserva</TableCell>
+                    <TableCell sx={{textAlign:"center"}}>{t("cell1")}</TableCell>
+                    <TableCell sx={{textAlign:"center"}}>{t("cell2")}</TableCell>
+                    <TableCell sx={{textAlign:"center"}}>{t("cell3")}</TableCell>
+                    <TableCell sx={{textAlign:"center"}}>{t("cell4")}</TableCell>
+                    <TableCell sx={{textAlign:"center"}}>{t("cell5")}</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>

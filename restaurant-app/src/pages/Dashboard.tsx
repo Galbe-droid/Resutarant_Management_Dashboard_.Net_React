@@ -6,8 +6,10 @@ import {useEffect, useState} from "react";
 import {getAllTables} from "../services/TableServices.tsx";
 import type {TableSummaryDto} from "../types/tables/TableSummaryDto.ts";
 import {CreateTableDialog} from "../components/tables/CreateTableDialog.tsx";
+import {useTranslation} from "react-i18next";
 
 export function Dashboard() {
+    const { t } = useTranslation("dashboard");
     const [tables, setTables] = useState<TableSummaryDto[]>([]);
     const [loading, setLoading] = useState(true);
     const [openCreateDialog, setOpenCreateDialog] = useState(false);
@@ -39,16 +41,16 @@ export function Dashboard() {
     return (
         <Grid container spacing={3}>
             <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={"Mesas Livres"} value={"8"} icon={<TableRestaurant/>}/>
+                <DashboardCard title={t("freeTables")} value={"8"} icon={<TableRestaurant/>}/>
             </Grid>
             <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={"Mesas Reservadas"} value={"2"} icon={<TableBarOutlined/>}/>
+                <DashboardCard title={t("reservedTables")} value={"2"} icon={<TableBarOutlined/>}/>
             </Grid>
             <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={"Pedidos"} value={"15"} icon={<ReceiptLong/>}/>
+                <DashboardCard title={t("orders")} value={"15"} icon={<ReceiptLong/>}/>
             </Grid>
             <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={"Receita Hoje"} value={"R$ 2.430"} icon={<Payments/>}/>
+                <DashboardCard title={t("profit")} value={"R$ 2.430"} icon={<Payments/>}/>
             </Grid>
 
             <Box
@@ -61,7 +63,7 @@ export function Dashboard() {
                 }}
             >
                 <Stack sx={{display: "flex", flexDirection: "row", alignItems: "center", spacing: 1, mt:5, mb:3}}>
-                    <Typography variant="h5" sx={{fontWeight: 600}}>Status das Mesas</Typography>
+                    <Typography variant="h5" sx={{fontWeight: 600}}>{t("title")}</Typography>
                     <Divider sx={{ flex: 1 }}/>
                 </Stack>
                 <TableContainer
@@ -78,7 +80,7 @@ export function Dashboard() {
                             variant="contained"
                             onClick={() => setOpenCreateDialog(true)}
                         >
-                            Nova Mesa
+                            {t("newTable")}
                         </Button>
                     </Box>
                     {loading ? <CircularProgress/> : <DashboardTable tables={tables}/>}

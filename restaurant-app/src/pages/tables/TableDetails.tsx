@@ -1,12 +1,6 @@
 import type {TableFormDto} from "../../types/tables/TableFormDto.ts";
 import type {UpdateTableDto} from "../../types/tables/UpdateTableDto.ts";
-import {
-    cancelReservationTable,
-    getTable,
-    reservationUpdateTable,
-    statusUpdateTable,
-    updateTable
-} from "../../services/TableServices.tsx";
+import {cancelReservationTable, getTable, reservationUpdateTable, statusUpdateTable, updateTable} from "../../services/TableServices.tsx";
 import {useParams} from "react-router-dom";
 import {useSnackbar} from "../../hooks/useSnackbar.ts";
 import {TableForm} from "../../components/tables/TableForm.tsx";
@@ -16,9 +10,11 @@ import {useEffect, useState} from "react";
 import {TableStatus} from "../../enum/TableStatus.ts";
 import type {TableStatusUpdateDto} from "../../types/tables/TableStatusUpdateDto.ts";
 import type {TableReservationUpdateDto} from "../../types/tables/TableReservationUpdateDto.ts";
+import {useTranslation} from "react-i18next";
 
 export function TableDetails(){
     const {id} = useParams();
+    const { t } = useTranslation("table");
     const [table, setTable] = useState<ReturnTableDto | null>(null);
     const [loading, setLoading] = useState(true);
     const { showSnackbar } = useSnackbar();
@@ -45,7 +41,6 @@ export function TableDetails(){
             await updateTable(dto);
 
             if(data.tableStatus !== TableStatus.Reserved){
-                console.log(statusDto);
                 await statusUpdateTable(id!, statusDto)
             }
 
@@ -53,12 +48,12 @@ export function TableDetails(){
                 await reservationUpdateTable(id!, resevationDto)
             }
 
-            showSnackbar("Mesa atualizada com sucesso !", "success")
+            showSnackbar( t("sucessOnCreate"), "success")
 
             await loadTable();
         }
         catch (error) {
-            showSnackbar("Erro ao atualizar!: " + error, "error");
+            showSnackbar(t("errorOnUpdate") + error, "error");
         }
     }
 
@@ -67,10 +62,10 @@ export function TableDetails(){
 
         try{
             await cancelReservationTable(id);
-            showSnackbar("Reserva cancelada!", "success");
+            showSnackbar(t("sucessOnCancelReserve"), "success");
             await loadTable();
         }catch(error){
-            showSnackbar("Erro ao cancelar!: " + error, "error");
+            showSnackbar(t("errorOnCancelReserve") + error, "error");
         }
     }
 

@@ -1,15 +1,17 @@
 import {Drawer, ListItem, ListItemButton, ListItemText, Toolbar} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 
 export function Sidebar()
 {
+    const { t } = useTranslation("sidebar");
     const menuItems = [
         { text: "Dashboard", path: "/dashboard"},
-        { text: "Produtos", path: "/products" },
-        { text: "Categorias", path: "/categories" },
-        { text: "Pedidos", path: "/orders" },
-        { text: "Pagamentos", path: "/payments" },
-        { text: "Usuários", path: "/users" },
+        { text: t("products"), path: "/products" },
+        { text: t("categories"), path: "/categories" },
+        { text: t("orders"), path: "/orders" },
+        { text: t("payments"), path: "/payments" },
+        { text: t("users"), path: "/users" },
     ];
 
     return(

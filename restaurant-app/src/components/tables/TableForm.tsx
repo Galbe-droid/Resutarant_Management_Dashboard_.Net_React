@@ -4,6 +4,7 @@ import {TableStatus} from "../../enum/TableStatus.ts";
 import {Controller, useForm, useWatch} from "react-hook-form";
 import type {TableFormDto} from "../../types/tables/TableFormDto.ts";
 import {useEffect} from "react";
+import {useTranslation} from "react-i18next";
 
 interface TableFormProps {
     initialValues?: ReturnTableDto
@@ -12,6 +13,7 @@ interface TableFormProps {
 }
 
 export function TableForm({initialValues, onSubmit, onCancelReservation}: TableFormProps) {
+    const { t } = useTranslation("table");
     const {register, control, handleSubmit, reset, formState: { errors }} = useForm<TableFormDto>({
         defaultValues:{
             number: initialValues?.number ?? 1,
@@ -50,10 +52,10 @@ export function TableForm({initialValues, onSubmit, onCancelReservation}: TableF
                 padding: 2
             }}
         >
-            <TextField fullWidth label={"Numero da mesa"} type={"number"} {...register("number")}
+            <TextField fullWidth label={t("field1")} type={"number"} {...register("number")}
                         error={!!errors.number} helperText={errors.number?.message}/>
 
-            <TextField fullWidth label={"Capacidade"} type={"number"} {...register("capacity")}
+            <TextField fullWidth label={t("field2")} type={"number"} {...register("capacity")}
                        error={!!errors.capacity} helperText={errors.capacity?.message}/>
 
             <FormControl fullWidth>
@@ -63,13 +65,13 @@ export function TableForm({initialValues, onSubmit, onCancelReservation}: TableF
                         {...field}
                         labelId="table-status-label"
                         value={field.value}
-                        label={"Estado"}
+                        label={t("field3")}
                         onChange={(e) =>
                             field.onChange(Number(e.target.value))
                     }>
-                        <MenuItem value={TableStatus.Avaliable}>Avaliable</MenuItem>
-                        <MenuItem value={TableStatus.Occupied}>Occupied</MenuItem>
-                        <MenuItem value={TableStatus.Reserved}>Reserved</MenuItem>
+                        <MenuItem value={TableStatus.Avaliable}>{t("statusAvaliable")}</MenuItem>
+                        <MenuItem value={TableStatus.Occupied}>{t("statusOccupied")}</MenuItem>
+                        <MenuItem value={TableStatus.Reserved}>{t("statusReserved")}</MenuItem>
                     </Select>
                 )}/>
             </FormControl>
@@ -77,15 +79,15 @@ export function TableForm({initialValues, onSubmit, onCancelReservation}: TableF
             {tableStatus === TableStatus.Reserved ?
                 <>
                     <Divider/>
-                    <TextField fullWidth label={"Nome da Reserva"} type={"text"} {...register("reservationName")}/>
-                    <TextField fullWidth label={"Horario da Reserva "} type={"datetime-local"} {...register("reservationTime")}/>
+                    <TextField fullWidth label={t("field4")} type={"text"} {...register("reservationName")}/>
+                    <TextField fullWidth label={t("field5")} type={"datetime-local"} {...register("reservationTime")}/>
                 </>
             :
                 <></>
             }
-            <Button type={"submit"}>{initialValues ? "Editar Mesa" : "Nova Mesa"}</Button>
+            <Button type={"submit"}>{initialValues ? t("buttonEdit") : t("bottonNew")}</Button>
             {initialValues && (
-                <Button color="error" variant="outlined" onClick={onCancelReservation}>Cancelar Reserva</Button>
+                <Button color="error" variant="outlined" onClick={onCancelReservation}>{t("bottonCancelReserve")}</Button>
             )}
         </Box>
     )

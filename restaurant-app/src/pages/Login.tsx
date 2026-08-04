@@ -6,8 +6,8 @@ import type {LoginRequest} from "../types/user/LoginRequest.ts";
 import {useForm} from "react-hook-form";
 
 export function Login() {
-    const { t, i18n } = useTranslation();
-        const { register, handleSubmit, formState: { errors } } = useForm<LoginRequest>();
+    const { t, i18n } = useTranslation("login");
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginRequest>();
 
     const auth = useAuth();
 

@@ -104,7 +104,7 @@ namespace Template_restaurant_app.Application.Services
             if (table == null)
             {
                 return Result<ReturnTableDto>.NotFound("Table not found.");
-            }
+            }   
 
             table = RestaurantTableMapping.ToRestaurantTable(table, status);
 

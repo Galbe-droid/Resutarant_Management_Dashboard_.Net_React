@@ -1,7 +1,14 @@
 import type {TableFormDto} from "../../types/tables/TableFormDto.ts";
 import type {UpdateTableDto} from "../../types/tables/UpdateTableDto.ts";
-import {cancelReservationTable, getTable, reservationUpdateTable, statusUpdateTable, updateTable} from "../../services/TableServices.tsx";
-import {useParams} from "react-router-dom";
+import {
+    cancelReservationTable,
+    deleteTable,
+    getTable,
+    reservationUpdateTable,
+    statusUpdateTable,
+    updateTable
+} from "../../services/TableServices.tsx";
+import {useNavigate, useParams} from "react-router-dom";
 import {useSnackbar} from "../../hooks/useSnackbar.ts";
 import {TableForm} from "../../components/tables/TableForm.tsx";
 import {CircularProgress} from "@mui/material";
@@ -15,6 +22,7 @@ import {useTranslation} from "react-i18next";
 export function TableDetails(){
     const {id} = useParams();
     const { t } = useTranslation("table");
+    const navigate = useNavigate();
     const [table, setTable] = useState<ReturnTableDto | null>(null);
     const [loading, setLoading] = useState(true);
     const { showSnackbar } = useSnackbar();
@@ -57,6 +65,18 @@ export function TableDetails(){
         }
     }
 
+    const handleDelete = async() => {
+        if(!id) return;
+
+        try{
+            await deleteTable(id);
+            showSnackbar(t("sucessOnCancelReserve"), "success");
+            navigate("/dashboard");
+        }catch(error){
+            showSnackbar(t("errorOnCancelReserve") + error, "error");
+        }
+    }
+
     const handleCancelReservation = async() => {
         if(!id) return;
 
@@ -92,7 +112,7 @@ export function TableDetails(){
 
     return(
         <>
-            <TableForm initialValues={table!} onSubmit={handleSubmit} onCancelReservation={handleCancelReservation}></TableForm>
+            <TableForm initialValues={table!} onSubmit={handleSubmit} onCancelReservation={handleCancelReservation} onDeleteTable={handleDelete}></TableForm>
         </>
     )
 }

@@ -16,6 +16,7 @@
   "statusReserved": "Reserved",
   "bottonNew": "New Table",
   "bottonEdit": "Edit Table",
+  "buttonDelete": "Deletar Mesa",
   "bottonCancelReserve": "Cancel Reserve",
   "CreateTableDialog": "V",
   "sucessOnCreate": "Table successfully created !",

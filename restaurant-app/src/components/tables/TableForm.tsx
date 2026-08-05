@@ -10,9 +10,10 @@ interface TableFormProps {
     initialValues?: ReturnTableDto
     onSubmit: (data: TableFormDto) => void
     onCancelReservation?: () => void;
+    onDeleteTable?: () => void;
 }
 
-export function TableForm({initialValues, onSubmit, onCancelReservation}: TableFormProps) {
+export function TableForm({initialValues, onSubmit, onCancelReservation, onDeleteTable}: TableFormProps) {
     const { t } = useTranslation("table");
     const {register, control, handleSubmit, reset, formState: { errors }} = useForm<TableFormDto>({
         defaultValues:{
@@ -87,7 +88,10 @@ export function TableForm({initialValues, onSubmit, onCancelReservation}: TableF
             }
             <Button type={"submit"}>{initialValues ? t("buttonEdit") : t("bottonNew")}</Button>
             {initialValues && (
-                <Button color="error" variant="outlined" onClick={onCancelReservation}>{t("bottonCancelReserve")}</Button>
+                <>
+                    <Button color="error" variant="outlined" onClick={onCancelReservation}>{t("bottonCancelReserve")}</Button>
+                    <Button color="error" variant="outlined" onClick={onDeleteTable}>{t("buttonDelete")}</Button>
+                </>
             )}
         </Box>
     )

@@ -5,6 +5,7 @@ import type {CreateTableDto} from "../../types/tables/CreateTableDto.ts";
 import {useSnackbar} from "../../hooks/useSnackbar.ts";
 import {createTable} from "../../services/TableServices.tsx";
 import axios from "axios";
+import {useTranslation} from "react-i18next";
 
 interface CreateTableDialogProps {
     open: boolean;
@@ -14,6 +15,7 @@ interface CreateTableDialogProps {
 
 export function CreateTableDialog({open, onClose, onCreated}: CreateTableDialogProps) {
     const { showSnackbar } = useSnackbar();
+    const { t } = useTranslation("table");
 
     const handleCreate = async (data:TableFormDto) => {
         try{
@@ -22,16 +24,16 @@ export function CreateTableDialog({open, onClose, onCreated}: CreateTableDialogP
             };
             await createTable(dto);
             await onCreated();
-            showSnackbar("Mesa Criada com sucesso!", "success");
+            showSnackbar(t("sucessOnCreate"), "success");
             onClose()
         }catch (error){
             if (axios.isAxiosError(error)) {
                 showSnackbar(
-                    error.response?.data?.error ?? "Erro ao criar a mesa!",
+                    error.response?.data?.error ?? t("errorOnCreate"),
                     "error"
                 );
             } else {
-                showSnackbar("Erro inesperado.", "error");
+                showSnackbar(t("errorOnCreate"), "error");
             }
         }
     }

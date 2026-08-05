@@ -40,3 +40,7 @@ export const cancelReservationTable = async (id: string): Promise<ReturnTableDto
     return response.data.data;
 }
 
+export const deleteTable = async (id: string): Promise<boolean> => {
+    const response = await api.delete(`/RestaurantTables/delete/${id}`);
+    return response.data.data;
+}

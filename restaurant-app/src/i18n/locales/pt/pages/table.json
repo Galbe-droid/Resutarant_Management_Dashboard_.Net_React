@@ -16,6 +16,7 @@
   "statusReserved": "Reservado",
   "bottonNew": "Nova Mesa",
   "bottonEdit": "Editar Mesa",
+  "buttonDelete": "Deletar Mesa",
   "bottonCancelReserve": "Cancelar Reserva",
   "CreateTableDialog": "V",
   "sucessOnCreate": "Mesa Criada com sucesso!",

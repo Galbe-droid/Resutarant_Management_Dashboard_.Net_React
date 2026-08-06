@@ -8,8 +8,10 @@ import type {ReturnProductDto} from "../../types/products/ReturnProductDto.ts";
 import {CreateProductDialog} from "../../components/products/CreateProductDialog.tsx";
 import {getAllCategories} from "../../services/CategoryServices.tsx";
 import type {ReturnCategoryDto} from "../../types/categories/ReturnCategoryDto.ts";
+import {useTranslation} from "react-i18next";
 
 export function ProductsDashboard() {
+    const { t } = useTranslation("product");
     const [products, setProducts] = useState<ReturnProductDto[]>([]);
     const [categories, setCategories] = useState<ReturnCategoryDto[]>([]);
     const [loading, setLoading] = useState(true);
@@ -36,11 +38,14 @@ export function ProductsDashboard() {
         }
     };
 
+    const productCount = products?.length;
+    const categoryCount = products?.length;
+
     useEffect(() => {
         const load = async () => {
             await Promise.all([
                 loadProducts(),
-                loadCategories()
+                loadCategories(),
             ]);
         };
 
@@ -50,10 +55,10 @@ export function ProductsDashboard() {
     return (
         <Grid container spacing={3}>
             <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={"Quantidade de produtos"} value={"8"} icon={<ProductionQuantityLimits/>}/>
+                <DashboardCard title={t("productQuantity")} value={productCount.toString()} icon={<ProductionQuantityLimits/>}/>
             </Grid>
             <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={"Quantidade de categorias"} value={"2"} icon={<ProductionQuantityLimits/>}/>
+                <DashboardCard title={t("categoryQuantity")} value={categoryCount.toString()} icon={<ProductionQuantityLimits/>}/>
             </Grid>
 
             <Box
@@ -66,7 +71,7 @@ export function ProductsDashboard() {
                 }}
             >
                 <Stack sx={{display: "flex", flexDirection: "row", alignItems: "center", spacing: 1, mt:5, mb:3}}>
-                    <Typography variant="h5" sx={{fontWeight: 600}}>Produtos</Typography>
+                    <Typography variant="h5" sx={{fontWeight: 600}}>{t("title")}</Typography>
                     <Divider sx={{ flex: 1 }}/>
                 </Stack>
                 <TableContainer
@@ -83,7 +88,7 @@ export function ProductsDashboard() {
                             variant="contained"
                             onClick={() => setOpenCreateDialog(true)}
                         >
-                            Novo Produto
+                            {t("newButtonDashboard")}
                         </Button>
                     </Box>
                     {loading ? <CircularProgress/> : <DashboardProductTable products={products} categories={categories}/>}

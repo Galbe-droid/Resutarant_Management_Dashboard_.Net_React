@@ -6,6 +6,7 @@ import {DashboardLayout} from "./layouts/DashboardLayout.tsx";
 import {SnackbarProvider} from "./Providers/SnackbarProvider.tsx";
 import {TableDetails} from "./pages/tables/TableDetails.tsx";
 import {ProductsDashboard} from "./pages/products/ProductsDashboard.tsx";
+import {ProductDetails} from "./pages/products/ProductDetails.tsx";
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
                           <Route path="/dashboard" element={<Dashboard/>}/>
                           <Route path="/tables/:id" element={<TableDetails/>}/>
                           <Route path="/products" element={<ProductsDashboard/>}/>
+                          <Route path="/products/:id" element={<ProductDetails/>}/>
                       </Route>
                   </Routes>
               </BrowserRouter>

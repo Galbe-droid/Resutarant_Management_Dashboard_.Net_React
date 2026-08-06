@@ -1,13 +1,6 @@
 import type {TableFormDto} from "../../types/tables/TableFormDto.ts";
 import type {UpdateTableDto} from "../../types/tables/UpdateTableDto.ts";
-import {
-    cancelReservationTable,
-    deleteTable,
-    getTable,
-    reservationUpdateTable,
-    statusUpdateTable,
-    updateTable
-} from "../../services/TableServices.tsx";
+import { cancelReservationTable, deleteTable, getTable, reservationUpdateTable, statusUpdateTable, updateTable} from "../../services/TableServices.tsx";
 import {useNavigate, useParams} from "react-router-dom";
 import {useSnackbar} from "../../hooks/useSnackbar.ts";
 import {TableForm} from "../../components/tables/TableForm.tsx";

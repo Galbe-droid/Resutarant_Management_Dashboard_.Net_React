@@ -1,12 +1,13 @@
 import {Box, Button, CircularProgress, Divider, Grid, Stack, TableContainer, Typography} from "@mui/material";
 import {DashboardCard} from "../components/common/DashboardCard.tsx";
-import {Payments, ReceiptLong, TableBarOutlined, TableRestaurant} from "@mui/icons-material";
+import {ReceiptLong, TableBarOutlined, TableRestaurant} from "@mui/icons-material";
 import {DashboardTable} from "../components/tables/DashboardTable.tsx";
 import {useEffect, useState} from "react";
 import {getAllTables} from "../services/TableServices.tsx";
 import type {TableSummaryDto} from "../types/tables/TableSummaryDto.ts";
 import {CreateTableDialog} from "../components/tables/CreateTableDialog.tsx";
 import {useTranslation} from "react-i18next";
+import {TableStatus} from "../enum/TableStatus.ts";
 
 export function Dashboard() {
     const { t } = useTranslation("dashboard");
@@ -34,6 +35,11 @@ export function Dashboard() {
         }
     }
 
+    const totalTablesCount = tables.length;
+    const freeTablesCount = tables.filter(table => table.tableStatus === TableStatus.Avaliable).length;
+    const reservedTablesCount = tables.filter(table => table.tableStatus === TableStatus.Reserved).length;
+
+
     useEffect(() => {
         loadTables();
     }, [])
@@ -41,16 +47,13 @@ export function Dashboard() {
     return (
         <Grid container spacing={3}>
             <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={t("freeTables")} value={"8"} icon={<TableRestaurant/>}/>
+                <DashboardCard title={t("freeTables")} value={freeTablesCount.toString() + "/" + totalTablesCount.toString()} icon={<TableRestaurant/>}/>
             </Grid>
             <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={t("reservedTables")} value={"2"} icon={<TableBarOutlined/>}/>
+                <DashboardCard title={t("reservedTables")} value={reservedTablesCount.toString() + "/" + totalTablesCount.toString()} icon={<TableBarOutlined/>}/>
             </Grid>
             <Grid size={{xs: 12, md: 3}}>
                 <DashboardCard title={t("orders")} value={"15"} icon={<ReceiptLong/>}/>
-            </Grid>
-            <Grid size={{xs: 12, md: 3}}>
-                <DashboardCard title={t("profit")} value={"R$ 2.430"} icon={<Payments/>}/>
             </Grid>
 
             <Box

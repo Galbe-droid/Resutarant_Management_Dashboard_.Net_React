@@ -5,6 +5,7 @@ import {Controller, useForm} from "react-hook-form";
 import {useEffect} from "react";
 import {Box, Button, MenuItem, TextField} from "@mui/material";
 import type {ReturnCategoryDto} from "../../types/categories/ReturnCategoryDto.ts";
+import {useTranslation} from "react-i18next";
 
 interface ProductFormProps {
     initialValues?: ReturnProductDto
@@ -22,6 +23,7 @@ export function ProductForm({initialValues, onSubmit, onDeleteProduct, categorie
             categoryId: initialValues?.categoryId ?? "",
         }
     });
+    const { t } = useTranslation("product");
 
     useEffect(() =>{
         if(!initialValues) return;
@@ -44,13 +46,13 @@ export function ProductForm({initialValues, onSubmit, onDeleteProduct, categorie
                  padding: 2
              }}
         >
-            <TextField fullWidth label={"Nome"} {...register("name")}
+            <TextField fullWidth label={t("form1")} {...register("name")}
                        error={!!errors.name} helperText={errors.name?.message}/>
 
-            <TextField fullWidth label={"Price"} type={"number"} slotProps={{htmlInput: { step: "0.01", min: "0" }}} {...register("price",{valueAsNumber: true})}
+            <TextField fullWidth label={t("form2")} type={"number"} slotProps={{htmlInput: { step: "0.01", min: "0" }}} {...register("price",{valueAsNumber: true})}
                        error={!!errors.price} helperText={errors.price?.message}/>
 
-            <TextField fullWidth label={"Description"} type={"text"} {...register("description")}
+            <TextField fullWidth label={t("form3")} type={"text"} {...register("description")}
                        error={!!errors.description} helperText={errors.description?.message}/>
 
             <Controller
@@ -61,7 +63,7 @@ export function ProductForm({initialValues, onSubmit, onDeleteProduct, categorie
                         {...field}
                         select
                         fullWidth
-                        label="Categoria"
+                        label={t("form4")}
                         error={!!errors.categoryId}
                         helperText={errors.categoryId?.message}
                     >
@@ -77,10 +79,10 @@ export function ProductForm({initialValues, onSubmit, onDeleteProduct, categorie
                 )}
             />
 
-            <Button type={"submit"}>{initialValues ? "Editar Produto" : "Novo Produto"}</Button>
+            <Button type={"submit"}>{initialValues ? t("editButton") : t("newButton")}</Button>
             {initialValues && (
                 <>
-                    <Button color="error" variant="outlined" onClick={onDeleteProduct}>Deletar Produto</Button>
+                    <Button color="error" variant="outlined" onClick={onDeleteProduct}>{t("deleteButton")}</Button>
                 </>
             )}
         </Box>

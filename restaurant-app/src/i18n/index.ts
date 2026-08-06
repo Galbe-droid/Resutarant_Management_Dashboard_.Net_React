@@ -10,6 +10,8 @@ import topbarPt from "./locales/pt/common/topbar.json";
 import topbarEn from "./locales/en/common/topbar.json";
 import sidebarPt from "./locales/pt/common/sidebar.json";
 import sidebarEn from "./locales/en/common/sidebar.json";
+import productPt from "./locales/pt/pages/product.json"
+import productEn from "./locales/en/pages/product.json"
 
 i18n
     .use(initReactI18next)
@@ -21,6 +23,7 @@ i18n
                 dashboard: dashboardPt,
                 topbar: topbarPt,
                 sidebar: sidebarPt,
+                product: productPt,
             },
             en: {
                 login: loginEn,
@@ -28,13 +31,14 @@ i18n
                 dashboard: dashboardEn,
                 topbar: topbarEn,
                 sidebar: sidebarEn,
+                product: productEn,
             }
         },
 
         lng: localStorage.getItem("language") || navigator.language.split("-")[0] || "pt",
         fallbackLng: "en",
 
-        ns: ["login", "table", "dashboard", "topbar", "sidebar"],
+        ns: ["login", "table", "dashboard", "topbar", "sidebar", "product"],
         defaultNS: "login",
 
         interpolation: {

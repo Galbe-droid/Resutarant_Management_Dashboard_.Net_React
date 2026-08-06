@@ -5,6 +5,7 @@ import type {CreateProductDto} from "../../types/products/CreateProductDto.ts";
 import type {ProductFormDto} from "../../types/products/ProductFormDto.ts";
 import {createProduct} from "../../services/ProductServices.tsx";
 import type {ReturnCategoryDto} from "../../types/categories/ReturnCategoryDto.ts";
+import {useTranslation} from "react-i18next";
 
 interface CreateTableDialogProp {
     open: boolean;
@@ -15,6 +16,7 @@ interface CreateTableDialogProp {
 
 export function CreateProductDialog({open, onClose, onCreated, categories}: CreateTableDialogProp) {
     const { showSnackbar } = useSnackbar();
+    const { t } = useTranslation("product");
 
     const handleCreate = async (data: ProductFormDto) => {
         try{
@@ -23,16 +25,16 @@ export function CreateProductDialog({open, onClose, onCreated, categories}: Crea
             }
             await createProduct(dto);
             await onCreated();
-            showSnackbar("Produto criado com sucesso!", "success");
+            showSnackbar(t("successCreation"), "success");
             onClose();
         }catch(error){
-            showSnackbar("Erro inesperado. " + error , "error");
+            showSnackbar(t("errorCreation") + error , "error");
         }
     }
 
     return(
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Novo Produto</DialogTitle>
+            <DialogTitle>{t("newButtonDashboard")}</DialogTitle>
 
             <DialogContent>
                 <ProductForm onSubmit={handleCreate} categories={categories} />

@@ -19,6 +19,16 @@ namespace Template_restaurant_app.API.Mappers
             return category;
         }
 
+        public static ReturnCategoryDashboardDto ToReturnCategoryDashboard(Category category, int productQuantity)
+        {
+            return new ReturnCategoryDashboardDto
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Quantity = productQuantity
+            };
+        }
+
         public static ReturnCategoryDto ToReturnCategory(Category category)
         {
             return new ReturnCategoryDto

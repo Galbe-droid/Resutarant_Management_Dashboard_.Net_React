@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
+using Template_restaurant_app.API.Extensions;
 using Template_restaurant_app.Application.Dtos.Category;
 using Template_restaurant_app.Application.Interfaces;
 using Template_restaurant_app.Application.Services;
@@ -26,7 +27,8 @@ namespace Template_restaurant_app.API.Controllers
         [Route("")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _categoryService.GetAllAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _categoryService.GetAllAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            return this.FromResult(result);
         }
 
         [Authorize]
@@ -34,7 +36,17 @@ namespace Template_restaurant_app.API.Controllers
         [Route("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            return Ok(await _categoryService.GetByIdAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _categoryService.GetByIdAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            return this.FromResult(result);
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("dashboard")]
+        public async Task<IActionResult> GetAllForDashboard()
+        {
+            var result = await _categoryService.GetDashboardAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            return this.FromResult(result);
         }
 
         [Authorize(Roles = $"{Roles.Admin}")]
@@ -45,7 +57,8 @@ namespace Template_restaurant_app.API.Controllers
             if(ModelState.IsValid)
             {
                 _logger.LogInformation("Attempt of creating a Ccategory for user {User}", User.FindFirstValue(ClaimTypes.Name));
-                return Ok(await _categoryService.CreateAsync(create, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+                var result = await _categoryService.CreateAsync(create, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+                return this.FromResult(result);
             }
 
             _logger.LogWarning("Failed Attempt of creating a category for user {User}", User.FindFirstValue(ClaimTypes.Name));
@@ -60,7 +73,8 @@ namespace Template_restaurant_app.API.Controllers
             if(ModelState.IsValid)
             {
                 _logger.LogInformation("Attempt of updating a category for user {User}", User.FindFirstValue(ClaimTypes.Name));
-                return Ok(await _categoryService.UpdateAsync(id, update, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+                var result = await _categoryService.UpdateAsync(id, update, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+                return this.FromResult(result);
             }
 
             _logger.LogWarning("Failed Attempt of updating a category for user {User}", User.FindFirstValue(ClaimTypes.Name));
@@ -73,7 +87,8 @@ namespace Template_restaurant_app.API.Controllers
         public async Task<IActionResult> Delete(Guid id)
         {
             _logger.LogInformation("Attempt of deleting a category for user {User}", User.FindFirstValue(ClaimTypes.Name));
-            return Ok(await _categoryService.DeleteAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _categoryService.DeleteAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            return this.FromResult(result);
         }
     }
 }

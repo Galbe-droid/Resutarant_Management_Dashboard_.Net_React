@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
+using Template_restaurant_app.API.Extensions;
 using Template_restaurant_app.Application.Dtos.Product;
 using Template_restaurant_app.Application.Interfaces;
 using Template_restaurant_app.Application.Services;
@@ -26,14 +27,16 @@ namespace Template_restaurant_app.API.Controllers
         [Route("")]
         public async Task<IActionResult> GetAll()
         {
-            return Ok(await _productService.GetAllAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _productService.GetAllAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            return this.FromResult(result);
         }
         [Authorize]
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
-            return Ok(await _productService.GetByIdAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _productService.GetByIdAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            return this.FromResult(result);
         }
         [Authorize(Roles = $"{Roles.Admin}")]
         [HttpPost]
@@ -43,7 +46,8 @@ namespace Template_restaurant_app.API.Controllers
             if(ModelState.IsValid)
             {
                 _logger.LogInformation("Attempt of creating a Product for user {User}", User.FindFirstValue(ClaimTypes.Name));
-                return Ok(await _productService.CreateAsync(create, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+                var result = await _productService.CreateAsync(create, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+                return this.FromResult(result);
             }
             _logger.LogWarning("Failed attempt of creating a Product for user {User} with data", User.FindFirstValue(ClaimTypes.Name));
             return BadRequest();
@@ -56,7 +60,8 @@ namespace Template_restaurant_app.API.Controllers
             if(ModelState.IsValid)
             {
                 _logger.LogInformation("Attempt of updating a Product for user {User}", User.FindFirstValue(ClaimTypes.Name));
-                return Ok(await _productService.UpdateAsync(id, update, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+                var result = await _productService.UpdateAsync(id, update, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+                return this.FromResult(result); 
             }
             _logger.LogWarning("Failed attempt of updating a Product for user {User} with data", User.FindFirstValue(ClaimTypes.Name));
             return BadRequest();
@@ -66,7 +71,8 @@ namespace Template_restaurant_app.API.Controllers
         [Route("delete/{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            return Ok(await _productService.DeleteAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!)));
+            var result = await _productService.DeleteAsync(id, Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            return this.FromResult(result);
         }
     }
 }

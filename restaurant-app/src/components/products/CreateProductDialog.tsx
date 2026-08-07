@@ -6,15 +6,16 @@ import type {ProductFormDto} from "../../types/products/ProductFormDto.ts";
 import {createProduct} from "../../services/ProductServices.tsx";
 import type {ReturnCategoryDto} from "../../types/categories/ReturnCategoryDto.ts";
 import {useTranslation} from "react-i18next";
+import axios from "axios";
 
-interface CreateTableDialogProp {
+interface CreateProductDialogProp {
     open: boolean;
     onClose: () => void;
     onCreated: () => void;
     categories: ReturnCategoryDto[];
 }
 
-export function CreateProductDialog({open, onClose, onCreated, categories}: CreateTableDialogProp) {
+export function CreateProductDialog({open, onClose, onCreated, categories}: CreateProductDialogProp) {
     const { showSnackbar } = useSnackbar();
     const { t } = useTranslation("product");
 
@@ -28,7 +29,14 @@ export function CreateProductDialog({open, onClose, onCreated, categories}: Crea
             showSnackbar(t("successCreation"), "success");
             onClose();
         }catch(error){
-            showSnackbar(t("errorCreation") + error , "error");
+            if (axios.isAxiosError(error)) {
+                showSnackbar(
+                    error.response?.data?.error ?? t("errorCreation"),
+                    "error"
+                );
+            } else {
+                showSnackbar(t("errorCreation") + error , "error");
+            }
         }
     }
 

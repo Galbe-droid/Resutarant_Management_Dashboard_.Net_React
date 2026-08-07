@@ -7,6 +7,7 @@ namespace Template_restaurant_app.Application.Interfaces
     {
         public Task<Result<List<ReturnCategoryDto>>> GetAllAsync(Guid userId);
         public Task<Result<ReturnCategoryDto>> GetByIdAsync(Guid id, Guid userId);
+        public Task<Result<List<ReturnCategoryDashboardDto>>> GetDashboardAsync(Guid userId);
         public Task<Result<ReturnCategoryDto>> CreateAsync(CreateCategoryDto create, Guid userId);
         public Task<Result<ReturnCategoryDto>> UpdateAsync(Guid id, UpdateCategoryDto update, Guid userId);
         public Task<Result<bool>> DeleteAsync(Guid id, Guid userId);

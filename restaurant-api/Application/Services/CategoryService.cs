@@ -33,19 +33,38 @@ namespace Template_restaurant_app.Application.Services
 
             if(category == null)
             {
-                return Result<ReturnCategoryDto>.Fail("Category not found");
+                return Result<ReturnCategoryDto>.NotFound("Category not found");
             }
 
             return Result<ReturnCategoryDto>.Ok(CategoryMapping.ToReturnCategory(category));
+        }
+
+        public async Task<Result<List<ReturnCategoryDashboardDto>>> GetDashboardAsync(Guid userId)
+        {
+            _context.CurrentUserId = userId;
+
+            List<ReturnCategoryDashboardDto> dashboardDtos = new List<ReturnCategoryDashboardDto>();
+            var categories = await _context.Categories.AsNoTracking().ToListAsync();
+
+            foreach (var category in categories)
+            {
+                var productCount = await _context.Products.CountAsync(p => p.CategoryId == category.Id);
+                var dashboardDto = CategoryMapping.ToReturnCategoryDashboard(category, productCount);
+                dashboardDtos.Add(dashboardDto);
+            }           
+
+            return Result<List<ReturnCategoryDashboardDto>>.Ok(dashboardDtos);
         }
 
         public async Task<Result<ReturnCategoryDto>> CreateAsync(CreateCategoryDto create, Guid userId)
         {
             _context.CurrentUserId = userId;
 
-            if(_context.Categories.Any(c => c.Name == create.Name))
+            var normalizedName = create.Name.Trim();
+
+            if (await _context.Categories.AnyAsync(c => c.Name.ToLower() == normalizedName.ToLower()))
             {
-                return Result<ReturnCategoryDto>.Fail("Category with the same name already exists");
+                return Result<ReturnCategoryDto>.Conflict("Category with the same name already exists");
             }
 
             var category = CategoryMapping.ToCategory(create);
@@ -63,12 +82,12 @@ namespace Template_restaurant_app.Application.Services
 
             if(category == null)
             {
-                return Result<ReturnCategoryDto>.Fail("Category not found");
+                return Result<ReturnCategoryDto>.NotFound("Category not found");
             }
 
             if(_context.Categories.Any(c => c.Name == update.Name && c.Id != id))
             {
-                return Result<ReturnCategoryDto>.Fail("Category with the same name already exists");
+                return Result<ReturnCategoryDto>.Conflict("Category with the same name already exists");
             }
 
             category = await _context.Categories.Include(c => c.Products).FirstOrDefaultAsync(c => c.Id == id);
@@ -84,26 +103,34 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var category = await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+            var category = await _context.Categories
+                .FirstOrDefaultAsync(c => c.Id == id);
 
-            if(category == null)
+            if (category == null)
             {
-                return Result<bool>.Fail("Category not found");
+                return Result<bool>.NotFound("Category not found.");
             }
 
             if (category.Name == "Other")
             {
-                return Result<bool>.Fail("Cannot delete default category");
+                return Result<bool>.Validation("Cannot delete default category.");
             }
 
-            var otherCategoryId = await _context.Categories.Where(c => c.Name == "Other").Select(c => c.Id).FirstOrDefaultAsync();
+            var otherCategory = await _context.Categories
+                .FirstOrDefaultAsync(c => c.Name == "Other");
 
-            foreach (var product in category.Products)
+            if (otherCategory == null)
             {
-                product.CategoryId = otherCategoryId;
+                return Result<bool>.Fail("Default category not found.");
             }
+
+            await _context.Products
+                .Where(p => p.CategoryId == id)
+                .ExecuteUpdateAsync(setters => setters
+                    .SetProperty(p => p.CategoryId, otherCategory.Id));
 
             _context.Categories.Remove(category);
+
             await _context.SaveChangesAsync();
 
             return Result<bool>.Ok(true);

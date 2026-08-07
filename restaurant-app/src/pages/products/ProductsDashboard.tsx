@@ -39,7 +39,7 @@ export function ProductsDashboard() {
     };
 
     const productCount = products?.length;
-    const categoryCount = products?.length;
+    const categoryCount = categories?.length;
 
     useEffect(() => {
         const load = async () => {

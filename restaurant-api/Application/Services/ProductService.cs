@@ -31,7 +31,7 @@ namespace Template_restaurant_app.Application.Services
 
             if (product == null)
             {
-                return Result<ReturnProductDto>.Fail("Product not found");
+                return Result<ReturnProductDto>.NotFound("Product not found");
             }
 
             return Result<ReturnProductDto>.Ok(ProductMapping.ToReturnProduct(product));
@@ -42,7 +42,7 @@ namespace Template_restaurant_app.Application.Services
             
             if(_context.Products.Any(p => p.Name == create.Name))
             {
-                return Result<ReturnProductDto>.Fail("Product with the same name already exists");
+                return Result<ReturnProductDto>.Conflict("Product with the same name already exists");
             }
 
             var category = _context.Categories.FirstOrDefault(c => c.Id == create.CategoryId);
@@ -64,14 +64,14 @@ namespace Template_restaurant_app.Application.Services
 
             if (_context.Products.Any(p => p.Name == update.Name && p.Id != id))
             {
-                return Result<ReturnProductDto>.Fail("Product with the same name already exists");
+                return Result<ReturnProductDto>.Conflict("Product with the same name already exists");
             }
 
             var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == id);
 
             if (product == null)
             {
-                return Result<ReturnProductDto>.Fail("Product not found");
+                return Result<ReturnProductDto>.NotFound("Product not found");
             }          
 
             var category = _context.Categories.FirstOrDefault(c => c.Id == update.CategoryId);
@@ -89,7 +89,7 @@ namespace Template_restaurant_app.Application.Services
 
             if (product == null)
             {
-                return Result<bool>.Fail("Product not found");
+                return Result<bool>.NotFound("Product not found");
             }
 
             _context.Products.Remove(product);

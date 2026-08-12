@@ -5,6 +5,7 @@ import type {CreateCategoryDto} from "../../types/categories/CreateCategoryDto.t
 import type {CategoryFormDto} from "../../types/categories/CategoryFormDto.ts";
 import {createCategories} from "../../services/CategoryServices.tsx";
 import axios from "axios";
+import {useTranslation} from "react-i18next";
 
 interface CreateCategoryDialogProp {
     open: boolean;
@@ -13,6 +14,7 @@ interface CreateCategoryDialogProp {
 }
 
 export function CreateCategoryDialog({open, onClose, onCreated}: CreateCategoryDialogProp) {
+    const { t } = useTranslation("category");
     const { showSnackbar } = useSnackbar();
 
     const handleCreate = async (data:CategoryFormDto) => {
@@ -22,7 +24,7 @@ export function CreateCategoryDialog({open, onClose, onCreated}: CreateCategoryD
             }
             await createCategories(dto);
             onCreated();
-            showSnackbar("Sucesso" , "success");
+            showSnackbar(t("successOnCreate") , "success");
             onClose();
         }catch(error){
             if (axios.isAxiosError(error)) {
@@ -31,7 +33,7 @@ export function CreateCategoryDialog({open, onClose, onCreated}: CreateCategoryD
                     "error"
                 );
             } else {
-                showSnackbar("Error: " + error , "error");
+                showSnackbar(t("errorOnCreate") + error , "error");
             }
         }
     }

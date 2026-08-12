@@ -7,9 +7,11 @@ import {deleteCategories, getCategories, updateCategories} from "../../services/
 import type {CategoryFormDto} from "../../types/categories/CategoryFormDto.ts";
 import {useSnackbar} from "../../hooks/useSnackbar.ts";
 import type {UpdateCategoryDto} from "../../types/categories/UpdateCategoryDto.ts";
+import {useTranslation} from "react-i18next";
 
 export function CategoryDetails() {
     const { id } = useParams();
+    const { t } = useTranslation("category");
     const { showSnackbar } = useSnackbar();
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
@@ -31,17 +33,17 @@ export function CategoryDetails() {
 
         try{
             if(id === '11111111-1111-1111-1111-111111111111'){
-                showSnackbar( "Cannot update base", "error");
+                showSnackbar( t("errorOnUpdateBase"), "error");
             }
             else{
                 const dto: UpdateCategoryDto = {
                     ...data,
                 }
                 await updateCategories(id!, dto);
-                showSnackbar( "Categoria Atualizada", "success");
+                showSnackbar( t("successOnUpdate"), "success");
             }
         }catch (error){
-            showSnackbar( "Error: " + error, "error");
+            showSnackbar( t("errorOnUpdate") + error, "error");
         }
     }
 
@@ -49,16 +51,16 @@ export function CategoryDetails() {
         if(!id) return;
         try{
             if(id === '11111111-1111-1111-1111-111111111111'){
-                showSnackbar( "Cannot delete base", "error");
+                showSnackbar( t("errorOnDeleteBase"), "error");
             }
             else{
                 await deleteCategories(id!);
-                showSnackbar( "Categoria Deletada", "success");
+                showSnackbar( t("successOnDelete"), "success");
                 navigate("/categories")
             }
 
         }catch(error){
-            showSnackbar( "Error: " + error, "error");
+            showSnackbar( t("errorOnDelete") + error, "error");
         }
     }
 

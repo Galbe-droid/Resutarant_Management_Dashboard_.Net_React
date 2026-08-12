@@ -1,0 +1,22 @@
+{
+  "CategoryDashboard": "V",
+  "titleDashboard": "Categories",
+  "newCategoryButton": "New Categories",
+  "DashboardCategoryTable": "V",
+  "cell1": "Name",
+  "cell2": "Qty of Products",
+  "CategoryForm": "V",
+  "editCategoryButton": "Edit Category",
+  "newCategoryButtonForm": "New Category",
+  "deleteCategoryButton": "Delete Category",
+  "CreateCategoryDialog": "V",
+  "errorOnCreate": "Error when create: ",
+  "successOnCreate": "Success",
+  "CategoryDetails": "V",
+  "errorOnUpdateBase": "Can't Modify default category",
+  "successOnUpdate": "Category Updated",
+  "errorOnUpdate": "Error when Update: ",
+  "errorOnDeleteBase": "Can't delete default category",
+  "successOnDelete": "Category Deleted",
+  "errorOnDelete": "Error when deleting: "
+}

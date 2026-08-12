@@ -1,19 +1,21 @@
 import {Table, TableBody, TableCell, TableHead, TableRow} from "@mui/material";
 import type {ReturnCategoryDashboardDto} from "../../types/categories/ReturnCategoryDashboardDto.ts";
 import {useNavigate} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 interface DashboardCategoryTableProps{
     categories: ReturnCategoryDashboardDto[];
 }
 
 export function DashboardCategoryTable({categories}: DashboardCategoryTableProps){
+    const { t } = useTranslation("category");
     const navigate = useNavigate();
     return (
         <Table>
             <TableHead>
                 <TableRow>
-                    <TableCell sx={{textAlign:"center"}}>Nome</TableCell>
-                    <TableCell sx={{textAlign:"center"}}>Qty de Produtos</TableCell>
+                    <TableCell sx={{textAlign:"center"}}>{t("cell1")}</TableCell>
+                    <TableCell sx={{textAlign:"center"}}>{t("cell2")}</TableCell>
                 </TableRow>
             </TableHead>
             <TableBody>

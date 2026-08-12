@@ -1,0 +1,22 @@
+{
+  "CategoryDashboard": "V",
+  "titleDashboard": "Categorias",
+  "newCategoryButton": "Nova Categoria",
+  "DashboardCategoryTable": "V",
+  "cell1": "Nome",
+  "cell2": "Qtd de Produtos",
+  "CategoryForm": "V",
+  "editCategoryButton": "Editar Categoria",
+  "newCategoryButtonForm": "Nova Categoria",
+  "deleteCategoryButton": "Deletar Categoria",
+  "CreateCategoryDialog": "V",
+  "errorOnCreate": "Erro ao criar: ",
+  "successOnCreate": "Sucesso",
+  "CategoryDetails": "V",
+  "errorOnUpdateBase": "Não pode modificar Categoria Padrão",
+  "successOnUpdate": "Categoria Atulizada",
+  "errorOnUpdate": "Erro ao Atualizar: ",
+  "errorOnDeleteBase": "Não pode deletar Categoria Padrão",
+  "successOnDelete": "Categoria Deletada",
+  "errorOnDelete": "Erro ao Deletar: "
+}

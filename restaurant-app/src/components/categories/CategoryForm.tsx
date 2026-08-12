@@ -3,6 +3,7 @@ import {useForm} from "react-hook-form";
 import type {CategoryFormDto} from "../../types/categories/CategoryFormDto.ts";
 import {useEffect} from "react";
 import {Box, Button, TextField} from "@mui/material";
+import {useTranslation} from "react-i18next";
 
 interface CategoryFormProps{
     initialValues?: ReturnCategoryDto;
@@ -12,6 +13,7 @@ interface CategoryFormProps{
 }
 
 export function CategoryForm({initialValues, onSubmit, onDeleteProduct}: CategoryFormProps) {
+    const { t } = useTranslation("category");
     const {register, handleSubmit, reset, formState: { errors }} = useForm<CategoryFormDto>({
         defaultValues:{
             name: initialValues?.name ?? "",
@@ -38,10 +40,10 @@ export function CategoryForm({initialValues, onSubmit, onDeleteProduct}: Categor
             <TextField fullWidth label={"Nome"} {...register("name")}
                        error={!!errors.name} helperText={errors.name?.message}/>
 
-            <Button type={"submit"}>{initialValues ? "Editar Categoria" : "Nova Categoria"}</Button>
+            <Button type={"submit"}>{initialValues ? t("editCategoryButton") : t("newCategoryButtonForm")}</Button>
             {initialValues && (
                 <>
-                    <Button color="error" variant="outlined" onClick={onDeleteProduct}>Deletar Categoria</Button>
+                    <Button color="error" variant="outlined" onClick={onDeleteProduct}>{t("deleteCategoryButton")}</Button>
                 </>
             )}
         </Box>

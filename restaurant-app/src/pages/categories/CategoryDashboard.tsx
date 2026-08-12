@@ -4,8 +4,10 @@ import {DashboardCategoryTable} from "../../components/categories/DashboardCateg
 import type {ReturnCategoryDashboardDto} from "../../types/categories/ReturnCategoryDashboardDto.ts";
 import {getCategoriesDashboard} from "../../services/CategoryServices.tsx";
 import {CreateCategoryDialog} from "../../components/categories/CreateCategoryDialog.tsx";
+import {useTranslation} from "react-i18next";
 
 export function CategoryDashboard(){
+    const { t } = useTranslation("category");
     const [categories, setCategories] = useState<ReturnCategoryDashboardDto[]>();
     const [loading, setLoading] = useState(true);
     const [openCreateDialog, setOpenCreateDialog] = useState(false);
@@ -43,7 +45,7 @@ export function CategoryDashboard(){
                 }}
             >
                 <Stack sx={{display: "flex", flexDirection: "row", alignItems: "center", spacing: 1, mt:5, mb:3}}>
-                    <Typography variant="h5" sx={{fontWeight: 600}}>Categorias</Typography>
+                    <Typography variant="h5" sx={{fontWeight: 600}}>Categorias{t("titleDashboard")}</Typography>
                     <Divider sx={{ flex: 1 }}/>
                 </Stack>
                 <TableContainer
@@ -60,7 +62,7 @@ export function CategoryDashboard(){
                             variant="contained"
                             onClick={() => setOpenCreateDialog(true)}
                         >
-                            Nova Categoria
+                            {t("newCategoryButton")}
                         </Button>
                     </Box>
                     {loading ? <CircularProgress/> : <DashboardCategoryTable categories={categories!}/>}

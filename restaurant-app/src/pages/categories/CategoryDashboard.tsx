@@ -45,7 +45,7 @@ export function CategoryDashboard(){
                 }}
             >
                 <Stack sx={{display: "flex", flexDirection: "row", alignItems: "center", spacing: 1, mt:5, mb:3}}>
-                    <Typography variant="h5" sx={{fontWeight: 600}}>Categorias{t("titleDashboard")}</Typography>
+                    <Typography variant="h5" sx={{fontWeight: 600}}>{t("titleDashboard")}</Typography>
                     <Divider sx={{ flex: 1 }}/>
                 </Stack>
                 <TableContainer

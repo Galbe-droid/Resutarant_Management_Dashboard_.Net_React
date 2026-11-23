@@ -7,6 +7,7 @@ namespace Template_restaurant_app.Application.Interfaces
     {
         public Task<Result<List<ReturnTableDto>>> GetAllAsync(Guid userId);
         public Task<Result<ReturnTableDto>> GetByIdAsync(Guid id, Guid userId);
+        public Task<Result<List<ReturnAvaliableTableSelectionDto>>> GetAllAvailableTablesAsync(Guid userId);
         public Task<Result<ReturnTableDto>> CreateAsync(CreateTableDto create, Guid userId);
         public Task<Result<ReturnTableDto>> UpdateAsync(Guid id, UpdateTableDto update, Guid userId);
         public Task<Result<ReturnTableDto>> StatusAsync(Guid id, Guid userId, ChangeTableStatusDto status);

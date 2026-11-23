@@ -27,9 +27,10 @@ namespace Template_restaurant_app.API.Mappers
             {
                 Id = order.Id,
                 TableId = order.TableId,
+                TableNumber = order.Table.Number,
                 OrderDate = order.OrderDate,
                 TotalAmount = order.TotalAmount,
-                Status = order.Status,
+                orderStatus = order.Status,
                 OrderItems = OrderItemMapping.ToReturnOrderItems(order.OrderItems.ToList())
             };
         }

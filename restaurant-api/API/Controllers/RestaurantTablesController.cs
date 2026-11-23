@@ -43,6 +43,14 @@ namespace Template_restaurant_app.API.Controllers
 
             return this.FromResult(result);
         }
+        [HttpGet]
+        [Route("avaliable")]
+        public async Task<IActionResult> GetAllAvailable()
+        {
+            var result = await _restaurantTableService.GetAllAvailableTablesAsync(Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier)!));
+            
+            return this.FromResult(result);
+        }
 
         [HttpPost]
         [Route("create")]

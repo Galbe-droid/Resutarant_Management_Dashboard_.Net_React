@@ -54,7 +54,7 @@ namespace Template_restaurant_app.Application.Services
                         TableId = o.TableId,
                         OrderDate = o.OrderDate,
                         TotalAmount = o.TotalAmount,
-                        Status = o.Status,
+                        orderStatus = o.Status,
                         OrderItems = o.OrderItems.Select(oi => new ReturnOrderItemDto
                         {
                             Id = oi.Id,

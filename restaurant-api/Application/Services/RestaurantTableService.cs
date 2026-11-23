@@ -41,6 +41,15 @@ namespace Template_restaurant_app.Application.Services
             return Result<ReturnTableDto>.Ok(RestaurantTableMapping.ToReturnTableDto(table));
         }
 
+        public async Task<Result<List<ReturnAvaliableTableSelectionDto>>> GetAllAvailableTablesAsync(Guid userId)
+        {
+            _context.CurrentUserId = userId;
+
+            var tables = await _context.RestaurantTables.AsNoTracking().Where(table => table.TableStatus == TableStatus.Available).ToListAsync();
+
+            return Result<List<ReturnAvaliableTableSelectionDto>>.Ok(RestaurantTableMapping.ToReturnAvailableTables(tables));
+        }
+
         public async Task<Result<ReturnTableDto>> CreateAsync(CreateTableDto create, Guid userId)
         {
             _context.CurrentUserId = userId;

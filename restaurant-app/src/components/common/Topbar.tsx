@@ -1,4 +1,4 @@
-import {AppBar, IconButton, Menu, MenuItem, Stack, Toolbar, Tooltip, Typography} from "@mui/material";
+import {AppBar, Box, IconButton, Menu, MenuItem, Stack, Toolbar, Tooltip, Typography} from "@mui/material";
 import {useAuth} from "../../hooks/useAuth.ts";
 import {useTranslation} from "react-i18next";
 import { Language } from "@mui/icons-material";
@@ -46,10 +46,17 @@ export function Topbar() {
                 }}
             >
                 <Typography>{t("welcome")} {auth.userInfo?.name}</Typography>
+                <Box
+                    sx={{
+                        gap: 2,
+                        display: "flex",
+                    }}
+                >
 
                 <Typography>{auth.userInfo?.email}</Typography>
 
                 <Typography>{auth.userInfo?.roles}</Typography>
+                </Box>
 
                 <Tooltip title="Language">
                     <IconButton color="inherit" onClick={handleOpen}>

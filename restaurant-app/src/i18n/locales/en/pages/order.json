@@ -1,0 +1,15 @@
+{
+  "statusOpen": "Open",
+  "statusAttention": "Attention",
+  "statusFinished": "Finished",
+  "statusPaid": "Paid",
+  "statusCancelled": "Cancelled",
+  "cell1": "Table",
+  "cell2": "Time",
+  "cell3": "Total",
+  "cell4": "State",
+  "tableStatusAvaliable": "Available",
+  "create": "Create Order",
+  "update": "Change Tables",
+  "titleCreateOrder": "New Order"
+}

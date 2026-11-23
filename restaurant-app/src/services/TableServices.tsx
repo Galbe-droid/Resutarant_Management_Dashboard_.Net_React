@@ -4,6 +4,7 @@ import type {UpdateTableDto} from "../types/tables/UpdateTableDto.ts";
 import type {CreateTableDto} from "../types/tables/CreateTableDto.ts";
 import type {TableReservationUpdateDto} from "../types/tables/TableReservationUpdateDto.ts";
 import type {TableStatusUpdateDto} from "../types/tables/TableStatusUpdateDto.ts";
+import type {ReturnAvailableTablesDto} from "../types/tables/ReturnAvailableTablesDto.ts";
 
 export const getAllTables = async (): Promise<ReturnTableDto[]> => {
     const response = await api.get<ApiResponse<ReturnTableDto[]>>("/RestaurantTables");
@@ -12,6 +13,11 @@ export const getAllTables = async (): Promise<ReturnTableDto[]> => {
 
 export const getTable = async (id: string): Promise<ReturnTableDto> => {
     const response = await api.get<ApiResponse<ReturnTableDto>>(`/RestaurantTables/${id}`);
+    return response.data.data;
+}
+
+export const getAllAvailableTables = async (): Promise<ReturnAvailableTablesDto[]> => {
+    const response = await api.get<ApiResponse<ReturnAvailableTablesDto[]>>(`/RestaurantTables/avaliable`);
     return response.data.data;
 }
 

@@ -5,7 +5,9 @@ import type {LoginRequest} from "../types/user/LoginRequest.ts";
 import type { User } from "../types/user/User.ts";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [accessToken, setAccessToken] = useState<string | null>(null);
+    const [accessToken, setAccessToken] = useState<string | null>(
+        () => localStorage.getItem("accessToken")
+    );
     const [userInfo, setUserInfo] = useState<User | null>(() => {
         const user = localStorage.getItem("userInfo");
         return user ? JSON.parse(user) : null;
@@ -49,9 +51,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     async function logout()
     {
         setAccessToken(null);
+        setUserInfo(null);
 
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
+        localStorage.removeItem("userInfo");
     }
 
     return (

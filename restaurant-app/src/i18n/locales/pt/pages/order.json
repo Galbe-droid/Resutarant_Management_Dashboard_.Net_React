@@ -1,0 +1,15 @@
+{
+  "statusOpen": "Aberto",
+  "statusAttention": "Atenção",
+  "statusFinished": "Encerrado",
+  "statusPaid": "Pago",
+  "statusCancelled": "Cencelado",
+  "cell1": "Mesa",
+  "cell2": "Hora",
+  "cell3": "Total",
+  "cell4": "Estado",
+  "tableStatusAvaliable": "Disponivel",
+  "create": "Criar Pedido",
+  "update": "Mudar Mesa",
+  "titleCreateOrder": "Novo Pedido"
+}

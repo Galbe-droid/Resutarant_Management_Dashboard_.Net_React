@@ -9,6 +9,8 @@ import {ProductsDashboard} from "./pages/products/ProductsDashboard.tsx";
 import {ProductDetails} from "./pages/products/ProductDetails.tsx";
 import {CategoryDashboard} from "./pages/categories/CategoryDashboard.tsx";
 import {CategoryDetails} from "./pages/categories/CategoryDetails.tsx";
+import {OrderDashboard} from "./pages/orders/OrderDashboard.tsx";
+import {OrderDetails} from "./pages/orders/OrderDetails.tsx";
 
 function App() {
 
@@ -25,6 +27,8 @@ function App() {
                           <Route path="/products/:id" element={<ProductDetails/>}/>
                           <Route path="/categories" element={<CategoryDashboard/>}/>
                           <Route path="/categories/:id" element={<CategoryDetails/>}/>
+                          <Route path="/orders" element={<OrderDashboard/>}/>
+                          <Route path="/orders/:id" element={<OrderDetails/>}/>
                       </Route>
                   </Routes>
               </BrowserRouter>

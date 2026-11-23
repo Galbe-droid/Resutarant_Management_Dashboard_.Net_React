@@ -21,7 +21,7 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var orders = await _context.Orders.AsNoTracking().ToListAsync();
+            var orders = await _context.Orders.Include(o => o.Table).AsNoTracking().ToListAsync();
 
             return Result<List<ReturnOrderDto>>.Ok(OrderMapping.ToReturnOrders(orders));
         }
@@ -30,7 +30,7 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var order = await _context.Orders.AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _context.Orders.Include(o => o.Table).Include(o => o.OrderItems).AsNoTracking().FirstOrDefaultAsync(o => o.Id == id);
             if (order == null)
             {
                 return Result<ReturnOrderDto>.Fail("Order not found");
@@ -66,7 +66,7 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = _context.Orders.Include(o => o.Table).FirstOrDefault(o => o.Id == id);
 
             if (order == null)
             {
@@ -82,7 +82,7 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = _context.Orders.Include(o => o.Table).FirstOrDefault(o => o.Id == id);
 
             if (order == null)
             {
@@ -115,7 +115,8 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = _context.Orders.Include(o => o.Table).Include(o => o.OrderItems).FirstOrDefault(o => o.Id == id);
+            Console.WriteLine(update.itemId);
 
             if (order == null)
             {
@@ -130,13 +131,14 @@ namespace Template_restaurant_app.Application.Services
             }
 
             var createOrderItem = OrderItemMapping.ToOrderItem(update, order, product);
+            Console.WriteLine(createOrderItem);
 
             _context.OrderItems.Add(createOrderItem);
             await _context.SaveChangesAsync();
 
             await UpdateOrderTotalAmount(id);
 
-            var updatedOrder = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == id);
+            var updatedOrder = await _context.Orders.Include(o => o.OrderItems).Include(o => o.Table).FirstOrDefaultAsync(o => o.Id == id);
 
             if(updatedOrder == null)
             {
@@ -150,7 +152,7 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == orderId);
+            var order = _context.Orders.Include(o => o.Table).FirstOrDefault(o => o.Id == orderId);
 
             if (order == null)
             {
@@ -177,7 +179,7 @@ namespace Template_restaurant_app.Application.Services
 
             await UpdateOrderTotalAmount(orderId);
 
-            var updatedOrder = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == orderId);
+            var updatedOrder = await _context.Orders.Include(o => o.Table).Include(o => o.OrderItems).FirstOrDefaultAsync(o => o.Id == orderId);
 
             if (updatedOrder != null)
             {
@@ -191,7 +193,7 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = _context.Orders.Include(o => o.Table).FirstOrDefault(o => o.Id == id);
 
             if (order == null)
             {
@@ -224,7 +226,7 @@ namespace Template_restaurant_app.Application.Services
         {
             _context.CurrentUserId = userId;
 
-            var order = await _context.Orders.FirstOrDefaultAsync(o => o.Id == id);
+            var order = await _context.Orders.Include(o => o.Table).FirstOrDefaultAsync(o => o.Id == id);
 
             if (order == null)
             {

@@ -9,9 +9,10 @@ namespace Template_restaurant_app.Application.Dtos.Order
     {
         public Guid Id { get; set; }
         public Guid TableId { get; set; }
+        public int TableNumber { get; set; }
         public DateTimeOffset OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
-        public OrderStatus Status { get; set; }
+        public OrderStatus orderStatus { get; set; }
         public List<ReturnOrderItemDto> OrderItems { get; set; } = new List<ReturnOrderItemDto>();
     }
 }

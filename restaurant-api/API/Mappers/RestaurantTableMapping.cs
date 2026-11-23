@@ -53,9 +53,24 @@ namespace Template_restaurant_app.API.Mappers
             };
         }
 
+        public static ReturnAvaliableTableSelectionDto ToReturnAvailableTablesDto(RestaurantTable table)
+        {
+            return new ReturnAvaliableTableSelectionDto
+            {
+                Id = table.Id,
+                Number = table.Number,
+                TableStatus = table.TableStatus,
+            };
+        }
+
         public static List<ReturnTableDto> ToReturnTables(List<RestaurantTable> list)
         {
             return (from RestaurantTable table in list select ToReturnTableDto(table)).ToList();
+        }
+
+        public static List<ReturnAvaliableTableSelectionDto> ToReturnAvailableTables(List<RestaurantTable> list)
+        {
+            return (from RestaurantTable table in list select ToReturnAvailableTablesDto(table)).ToList();
         }
     }
 }
